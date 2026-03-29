@@ -1,19 +1,8 @@
-import { getAllPeptides, getPeptideBySlug } from "@/lib/peptides";
+import { getAllPeptides, getPeptideBySlug, getCategoryBySlug } from "@/lib/peptides";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import PeptideDetailTabs from "@/components/PeptideDetailTabs";
+import DetailTabs from "./DetailTabs";
 import type { Metadata } from "next";
-
-const categoryColors: Record<string, string> = {
-  "healing-recovery": "bg-green-100 text-green-800",
-  "growth-hormone": "bg-blue-100 text-blue-800",
-  "cognitive": "bg-purple-100 text-purple-800",
-  "immune": "bg-yellow-100 text-yellow-800",
-  "sexual-health": "bg-pink-100 text-pink-800",
-  "anti-aging": "bg-indigo-100 text-indigo-800",
-  "metabolic": "bg-orange-100 text-orange-800",
-  "neuroprotective": "bg-teal-100 text-teal-800",
-};
 
 export function generateStaticParams() {
   return getAllPeptides().map((p) => ({ slug: p.slug }));
@@ -21,7 +10,7 @@ export function generateStaticParams() {
 
 export function generateMetadata({ params }: { params: { slug: string } }): Metadata {
   const peptide = getPeptideBySlug(params.slug);
-  if (!peptide) return { title: "Peptide Not Found" };
+  if (!peptide) return { title: "Not Found" };
   return {
     title: `${peptide.name} - Peptide Analyzer`,
     description: peptide.description,
@@ -32,58 +21,61 @@ export default function PeptideDetailPage({ params }: { params: { slug: string }
   const peptide = getPeptideBySlug(params.slug);
   if (!peptide) notFound();
 
+  const category = getCategoryBySlug(peptide.category);
+
   return (
-    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-12">
       {/* Breadcrumb */}
-      <nav className="text-sm text-gray-500 mb-6">
-        <Link href="/" className="hover:text-primary-600">Home</Link>
-        <span className="mx-2">/</span>
-        <Link href="/peptides" className="hover:text-primary-600">Peptides</Link>
-        <span className="mx-2">/</span>
-        <span className="text-gray-900">{peptide.name}</span>
-      </nav>
+      <div className="flex items-center gap-2 text-sm text-gray-500 mb-8">
+        <Link href="/peptides" className="hover:text-gray-300">Peptides</Link>
+        <span>/</span>
+        <span className="text-gray-300">{peptide.name}</span>
+      </div>
 
       {/* Header */}
-      <div className="mb-8">
+      <div className="mb-10">
         <div className="flex items-center gap-3 mb-2">
-          <h1 className="text-3xl md:text-4xl font-bold text-gray-900">{peptide.name}</h1>
-          <span className={`text-xs px-3 py-1 rounded-full font-medium ${categoryColors[peptide.category] || "bg-gray-100"}`}>
-            {peptide.category.replace(/-/g, " ")}
+          <span className="text-2xl">{category?.icon}</span>
+          <span className="rounded-full bg-primary-900/50 px-3 py-1 text-xs text-primary-300 font-medium">
+            {category?.name}
           </span>
+          {peptide.legalStatus && (
+            <span className="rounded-full bg-gray-800 px-3 py-1 text-xs text-gray-400">
+              {peptide.legalStatus}
+            </span>
+          )}
         </div>
-        <p className="text-lg text-gray-500">{peptide.fullName}</p>
+        <h1 className="text-4xl font-bold">{peptide.name}</h1>
+        <p className="text-lg text-gray-400 mt-1">{peptide.fullName}</p>
+        <p className="mt-4 text-gray-300 leading-relaxed">{peptide.description}</p>
+
+        {(peptide.molecularFormula || peptide.molecularWeight) && (
+          <div className="mt-6 flex gap-6 flex-wrap">
+            {peptide.molecularFormula && (
+              <div>
+                <span className="text-xs text-gray-500 uppercase tracking-wider">Formula</span>
+                <p className="text-sm font-mono text-gray-300">{peptide.molecularFormula}</p>
+              </div>
+            )}
+            {peptide.molecularWeight && (
+              <div>
+                <span className="text-xs text-gray-500 uppercase tracking-wider">Molecular Weight</span>
+                <p className="text-sm text-gray-300">{peptide.molecularWeight}</p>
+              </div>
+            )}
+          </div>
+        )}
       </div>
 
-      {/* Quick Stats */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-8">
-        <div className="bg-green-50 rounded-lg p-3 text-center">
-          <p className="text-2xl font-bold text-green-700">{peptide.benefits.length}</p>
-          <p className="text-xs text-green-600">Benefits</p>
-        </div>
-        <div className="bg-red-50 rounded-lg p-3 text-center">
-          <p className="text-2xl font-bold text-red-700">{peptide.risks.length}</p>
-          <p className="text-xs text-red-600">Known Risks</p>
-        </div>
-        <div className="bg-blue-50 rounded-lg p-3 text-center">
-          <p className="text-2xl font-bold text-blue-700">{peptide.mechanismsOfAction.length}</p>
-          <p className="text-xs text-blue-600">Mechanisms</p>
-        </div>
-        <div className="bg-purple-50 rounded-lg p-3 text-center">
-          <p className="text-2xl font-bold text-purple-700">{peptide.researchLinks.length}</p>
-          <p className="text-xs text-purple-600">Studies</p>
-        </div>
-      </div>
-
-      {/* Tabs */}
-      <div className="bg-white rounded-xl border border-gray-200 p-6">
-        <PeptideDetailTabs peptide={peptide} />
-      </div>
+      {/* Tabbed Content */}
+      <DetailTabs peptide={peptide} />
 
       {/* Disclaimer */}
-      <div className="mt-8 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
-        <p className="text-sm text-yellow-800 text-center">
-          ⚠️ Information is for educational and research purposes only. This is not medical advice. Always consult a licensed healthcare professional before using any peptide.{" "}
-          <Link href="/disclaimer" className="underline font-medium">Full disclaimer</Link>
+      <div className="mt-12 rounded-xl border border-yellow-800/50 bg-yellow-950/30 p-5">
+        <p className="text-sm text-yellow-200/70">
+          <strong className="text-yellow-400">Disclaimer:</strong> This information is for educational purposes only and is not medical advice.
+          Many peptides are not FDA-approved for human use. Always consult a healthcare professional before use.{" "}
+          <Link href="/disclaimer" className="underline">Full disclaimer</Link>
         </p>
       </div>
     </div>
