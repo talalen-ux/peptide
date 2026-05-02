@@ -1,16 +1,5 @@
-import { getFeaturedPeptides, getAllCategories } from "@/lib/peptides";
 import Link from "next/link";
-
-const categoryColors: Record<string, string> = {
-  "healing-recovery": "bg-green-100 text-green-800",
-  "growth-hormone": "bg-blue-100 text-blue-800",
-  "cognitive": "bg-purple-100 text-purple-800",
-  "immune": "bg-yellow-100 text-yellow-800",
-  "sexual-health": "bg-pink-100 text-pink-800",
-  "anti-aging": "bg-indigo-100 text-indigo-800",
-  "metabolic": "bg-orange-100 text-orange-800",
-  "neuroprotective": "bg-teal-100 text-teal-800",
-};
+import { getFeaturedPeptides, getAllCategories } from "@/lib/peptides";
 
 export default function HomePage() {
   const featured = getFeaturedPeptides();
@@ -19,75 +8,140 @@ export default function HomePage() {
   return (
     <div>
       {/* Hero */}
-      <section className="gradient-hero text-white py-20 px-4">
-        <div className="max-w-4xl mx-auto text-center">
-          <h1 className="text-4xl md:text-6xl font-bold mb-4">Peptide Analyzer</h1>
-          <p className="text-lg md:text-xl text-white/80 mb-8 max-w-2xl mx-auto">
-            Comprehensive, research-backed information on 30 top peptides. Explore benefits, risks, dosage, mechanisms of action, and the latest scientific research.
+      <section className="relative overflow-hidden py-28 sm:py-40">
+        <div className="hero-glow absolute inset-0" />
+        <div className="dot-grid absolute inset-0 opacity-[0.03]" />
+        <div className="absolute top-20 right-[15%] w-64 h-64 rounded-full bg-[var(--accent)] opacity-[0.02] blur-[100px] animate-glow-pulse" />
+        <div className="absolute bottom-10 left-[10%] w-48 h-48 rounded-full bg-[var(--accent)] opacity-[0.015] blur-[80px] animate-glow-pulse delay-500" />
+
+        <div className="relative max-w-5xl mx-auto px-6 lg:px-8 text-center">
+          <div className="opacity-0 animate-fade-up">
+            <p className="font-mono text-xs tracking-[0.3em] uppercase text-[var(--accent)] mb-8">
+              Research-Backed Database
+            </p>
+          </div>
+
+          <h1 className="opacity-0 animate-fade-up delay-100">
+            <span className="font-display italic text-5xl sm:text-7xl lg:text-8xl tracking-tight text-gradient-green">
+              Peptide Analyzer
+            </span>
+          </h1>
+
+          <p className="mt-8 text-lg sm:text-xl text-[var(--text-secondary)] max-w-2xl mx-auto leading-relaxed opacity-0 animate-fade-up delay-200">
+            Comprehensive information on benefits, risks, dosage protocols, and
+            scientific research for the most studied peptides.
           </p>
-          <Link
-            href="/peptides"
-            className="inline-block bg-white text-primary-800 font-semibold px-8 py-3 rounded-full hover:bg-gray-100 transition-colors"
-          >
-            Browse All Peptides →
-          </Link>
+
+          <div className="mt-12 flex justify-center gap-4 opacity-0 animate-fade-up delay-300">
+            <Link
+              href="/peptides"
+              className="group relative px-8 py-3.5 rounded-full font-heading text-sm font-semibold text-black bg-[var(--accent)] hover:bg-[var(--accent-dim)] transition-all duration-300 hover:shadow-[0_0_30px_-5px_var(--accent)]"
+            >
+              Browse All Peptides
+              <span className="inline-block ml-2 transition-transform duration-300 group-hover:translate-x-1">
+                &rarr;
+              </span>
+            </Link>
+          </div>
         </div>
       </section>
 
-      {/* Disclaimer Banner */}
-      <div className="bg-yellow-50 border-b border-yellow-200 px-4 py-3">
-        <p className="text-center text-sm text-yellow-800">
-          ⚠️ <strong>Educational purposes only.</strong> This is not medical advice. Always consult a qualified healthcare provider before using any peptide.{" "}
-          <Link href="/disclaimer" className="underline font-medium">Read full disclaimer</Link>
-        </p>
-      </div>
+      <div className="line-glow" />
 
       {/* Categories */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <h2 className="text-2xl font-bold text-gray-900 mb-8 text-center">Browse by Category</h2>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          {categories.map((cat) => (
+      <section className="max-w-7xl mx-auto px-6 lg:px-8 py-24">
+        <div className="flex items-center gap-4 mb-12 opacity-0 animate-fade-up">
+          <h2 className="font-heading text-2xl font-semibold tracking-tight">Categories</h2>
+          <div className="flex-1 h-px bg-[var(--border)]" />
+        </div>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+          {categories.map((cat, i) => (
             <Link
               key={cat.slug}
               href={`/peptides?category=${cat.slug}`}
-              className="p-4 rounded-xl border border-gray-200 hover:border-primary-300 hover:shadow-md transition-all text-center"
+              className="card p-5 group opacity-0 animate-fade-up"
+              style={{ animationDelay: `${(i + 1) * 80}ms` }}
             >
-              <span className="text-3xl mb-2 block">{cat.icon}</span>
-              <h3 className="font-semibold text-gray-900 text-sm">{cat.name}</h3>
-              <p className="text-xs text-gray-500 mt-1">{cat.description}</p>
+              <span className="text-2xl block mb-3">{cat.icon}</span>
+              <h3 className="font-heading text-sm font-semibold text-[var(--text)] group-hover:text-[var(--accent)] transition-colors duration-300">
+                {cat.name}
+              </h3>
+              <p className="mt-1.5 text-xs text-[var(--text-muted)] leading-relaxed line-clamp-2">
+                {cat.description}
+              </p>
             </Link>
           ))}
         </div>
       </section>
 
-      {/* Featured Peptides */}
-      <section className="bg-gray-50 py-16 px-4">
-        <div className="max-w-7xl mx-auto">
-          <h2 className="text-2xl font-bold text-gray-900 mb-8 text-center">Featured Peptides</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {featured.map((peptide) => (
+      {/* Featured */}
+      <section className="relative">
+        <div className="dot-grid absolute inset-0 opacity-[0.02]" />
+        <div className="relative max-w-7xl mx-auto px-6 lg:px-8 py-24">
+          <div className="flex items-center gap-4 mb-12">
+            <h2 className="font-heading text-2xl font-semibold tracking-tight">Featured</h2>
+            <div className="flex-1 h-px bg-[var(--border)]" />
+            <Link href="/peptides" className="font-mono text-xs text-[var(--accent)] hover:underline underline-offset-4">
+              View all &rarr;
+            </Link>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {featured.map((p, i) => (
               <Link
-                key={peptide.slug}
-                href={`/peptides/${peptide.slug}`}
-                className="bg-white rounded-xl border border-gray-200 p-6 card-hover"
+                key={p.slug}
+                href={`/peptides/${p.slug}`}
+                className="card p-6 group opacity-0 animate-fade-up"
+                style={{ animationDelay: `${(i + 1) * 100}ms` }}
               >
-                <div className="flex items-center justify-between mb-3">
-                  <h3 className="font-bold text-lg text-gray-900">{peptide.name}</h3>
-                  <span className={`text-xs px-2 py-1 rounded-full font-medium ${categoryColors[peptide.category] || "bg-gray-100 text-gray-800"}`}>
-                    {peptide.category.replace(/-/g, " ")}
-                  </span>
+                <div className="flex items-start justify-between mb-4">
+                  <div>
+                    <h3 className="font-heading text-lg font-semibold group-hover:text-[var(--accent)] transition-colors duration-300">
+                      {p.name}
+                    </h3>
+                    <p className="font-mono text-[10px] tracking-wider uppercase text-[var(--text-muted)] mt-1">
+                      {p.category.replace(/-/g, " ")}
+                    </p>
+                  </div>
+                  <div className="w-8 h-8 rounded-full border border-[var(--border)] flex items-center justify-center group-hover:border-[var(--accent)] group-hover:bg-[var(--accent-muted)] transition-all duration-300">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-[var(--text-muted)] group-hover:text-[var(--accent)] transition-colors duration-300">
+                      <path d="M7 17L17 7M17 7H7M17 7V17" />
+                    </svg>
+                  </div>
                 </div>
-                <p className="text-sm text-gray-500 mb-1">{peptide.fullName}</p>
-                <p className="text-sm text-gray-600 line-clamp-3">{peptide.description}</p>
-                <div className="mt-4 flex flex-wrap gap-1">
-                  {peptide.benefits.slice(0, 3).map((b, i) => (
-                    <span key={i} className="text-xs bg-primary-50 text-primary-700 px-2 py-0.5 rounded">
-                      {b.length > 30 ? b.substring(0, 30) + "..." : b}
+                <p className="text-sm text-[var(--text-secondary)] leading-relaxed line-clamp-2 mb-5">
+                  {p.description}
+                </p>
+                <div className="flex gap-2 flex-wrap">
+                  {p.benefits.slice(0, 2).map((b, j) => (
+                    <span key={j} className="inline-block px-2.5 py-1 rounded-full text-[10px] font-mono border border-[var(--border)] text-[var(--text-secondary)] bg-[var(--accent-muted)]">
+                      {b.length > 30 ? b.substring(0, 30) + "…" : b}
                     </span>
                   ))}
                 </div>
               </Link>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Disclaimer */}
+      <section className="max-w-4xl mx-auto px-6 lg:px-8 py-16">
+        <div className="card p-6 border-amber-900/30 bg-amber-950/5">
+          <div className="flex gap-4 items-start">
+            <div className="w-10 h-10 rounded-full border border-amber-800/40 bg-amber-950/30 flex items-center justify-center flex-shrink-0">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" strokeWidth="2">
+                <path d="M12 9v4M12 17h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" />
+              </svg>
+            </div>
+            <div>
+              <h3 className="font-heading text-sm font-semibold text-amber-400 mb-1">Medical Disclaimer</h3>
+              <p className="text-sm text-amber-200/50 leading-relaxed">
+                This website is for educational purposes only. It is not medical advice. Many peptides are not FDA-approved. Always consult a healthcare professional.{" "}
+                <Link href="/disclaimer" className="underline underline-offset-2 text-amber-400/70 hover:text-amber-400 transition-colors">
+                  Read full disclaimer
+                </Link>
+              </p>
+            </div>
           </div>
         </div>
       </section>

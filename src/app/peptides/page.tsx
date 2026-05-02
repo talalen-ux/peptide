@@ -2,19 +2,8 @@
 
 import { useSearchParams, useRouter } from "next/navigation";
 import { useState, useEffect, Suspense } from "react";
-import { getAllPeptides, searchPeptides, getPeptidesByCategory, getAllCategories } from "@/lib/peptides";
+import { getAllPeptides, searchPeptides, getAllCategories } from "@/lib/peptides";
 import Link from "next/link";
-
-const categoryColors: Record<string, string> = {
-  "healing-recovery": "bg-green-100 text-green-800",
-  "growth-hormone": "bg-blue-100 text-blue-800",
-  "cognitive": "bg-purple-100 text-purple-800",
-  "immune": "bg-yellow-100 text-yellow-800",
-  "sexual-health": "bg-pink-100 text-pink-800",
-  "anti-aging": "bg-indigo-100 text-indigo-800",
-  "metabolic": "bg-orange-100 text-orange-800",
-  "neuroprotective": "bg-teal-100 text-teal-800",
-};
 
 function PeptidesList() {
   const searchParams = useSearchParams();
@@ -25,93 +14,84 @@ function PeptidesList() {
   const categories = getAllCategories();
 
   let results = q ? searchPeptides(q) : getAllPeptides();
-  if (cat) {
-    results = results.filter((p) => p.category === cat);
-  }
+  if (cat) results = results.filter((p) => p.category === cat);
 
   useEffect(() => { setQuery(q); }, [q]);
 
   function handleSearch(value: string) {
     setQuery(value);
     const params = new URLSearchParams(searchParams.toString());
-    if (value) params.set("q", value);
-    else params.delete("q");
+    if (value) params.set("q", value); else params.delete("q");
     router.push(`/peptides?${params.toString()}`);
   }
 
   function toggleCategory(slug: string) {
     const params = new URLSearchParams(searchParams.toString());
-    if (cat === slug) params.delete("category");
-    else params.set("category", slug);
+    if (cat === slug) params.delete("category"); else params.set("category", slug);
     router.push(`/peptides?${params.toString()}`);
   }
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <h1 className="text-3xl font-bold text-gray-900 mb-6">Browse Peptides</h1>
+    <div className="max-w-7xl mx-auto px-6 lg:px-8 py-16">
+      <div className="mb-12">
+        <p className="font-mono text-xs tracking-[0.3em] uppercase text-[var(--accent)] mb-3">Database</p>
+        <h1 className="font-heading text-3xl sm:text-4xl font-semibold tracking-tight">Browse Peptides</h1>
+      </div>
 
-      {/* Search */}
-      <div className="mb-6">
+      <div className="mb-6 relative">
+        <svg className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--text-muted)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+        </svg>
         <input
           type="text"
           value={query}
           onChange={(e) => handleSearch(e.target.value)}
-          placeholder="Search peptides by name, description..."
-          className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all text-gray-900"
+          placeholder="Search by name or keyword..."
+          className="w-full pl-12 pr-4 py-3.5 rounded-xl border border-[var(--border)] bg-[var(--bg-card)] text-[var(--text)] text-sm font-body placeholder:text-[var(--text-muted)] focus:border-[var(--accent)] focus:outline-none focus:ring-1 focus:ring-[var(--accent-muted)] transition-all duration-300"
         />
       </div>
 
-      {/* Category Filter */}
-      <div className="flex flex-wrap gap-2 mb-8">
+      <div className="flex flex-wrap gap-2 mb-10">
         <button
           onClick={() => { const params = new URLSearchParams(searchParams.toString()); params.delete("category"); router.push(`/peptides?${params.toString()}`); }}
-          className={`text-xs px-3 py-1.5 rounded-full font-medium transition-colors ${!cat ? "bg-primary-600 text-white" : "bg-gray-100 text-gray-600 hover:bg-gray-200"}`}
+          className={`px-4 py-2 rounded-full text-xs font-mono tracking-wider transition-all duration-300 border ${!cat ? "bg-[var(--accent)] text-black border-[var(--accent)] font-semibold" : "bg-transparent text-[var(--text-secondary)] border-[var(--border)] hover:border-[var(--border-hover)]"}`}
         >
-          All
+          ALL
         </button>
         {categories.map((c) => (
           <button
             key={c.slug}
             onClick={() => toggleCategory(c.slug)}
-            className={`text-xs px-3 py-1.5 rounded-full font-medium transition-colors ${cat === c.slug ? "bg-primary-600 text-white" : "bg-gray-100 text-gray-600 hover:bg-gray-200"}`}
+            className={`px-4 py-2 rounded-full text-xs font-mono tracking-wider transition-all duration-300 border ${cat === c.slug ? "bg-[var(--accent)] text-black border-[var(--accent)] font-semibold" : "bg-transparent text-[var(--text-secondary)] border-[var(--border)] hover:border-[var(--border-hover)]"}`}
           >
-            {c.icon} {c.name}
+            {c.name.toUpperCase()}
           </button>
         ))}
       </div>
 
-      {/* Results */}
-      <p className="text-sm text-gray-500 mb-4">{results.length} peptide{results.length !== 1 ? "s" : ""} found</p>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {results.map((peptide) => (
-          <Link
-            key={peptide.slug}
-            href={`/peptides/${peptide.slug}`}
-            className="bg-white rounded-xl border border-gray-200 p-6 transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5"
-          >
-            <div className="flex items-center justify-between mb-3">
-              <h3 className="font-bold text-lg text-gray-900">{peptide.name}</h3>
-              <span className={`text-xs px-2 py-1 rounded-full font-medium ${categoryColors[peptide.category] || "bg-gray-100"}`}>
-                {peptide.category.replace(/-/g, " ")}
-              </span>
+      <p className="font-mono text-xs text-[var(--text-muted)] mb-6">{results.length} peptide{results.length !== 1 ? "s" : ""}</p>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {results.map((p, i) => (
+          <Link key={p.slug} href={`/peptides/${p.slug}`} className="card p-6 group opacity-0 animate-fade-up" style={{ animationDelay: `${i * 60}ms` }}>
+            <div className="flex items-start justify-between mb-3">
+              <div>
+                <h3 className="font-heading text-base font-semibold group-hover:text-[var(--accent)] transition-colors duration-300">{p.name}</h3>
+                <p className="font-mono text-[10px] tracking-wider uppercase text-[var(--text-muted)] mt-0.5">{p.category.replace(/-/g, " ")}</p>
+              </div>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-[var(--text-muted)] group-hover:text-[var(--accent)] transition-colors duration-300 mt-1">
+                <path d="M7 17L17 7M17 7H7M17 7V17" />
+              </svg>
             </div>
-            <p className="text-sm text-gray-500 mb-1">{peptide.fullName}</p>
-            <p className="text-sm text-gray-600 line-clamp-2">{peptide.description}</p>
-            <div className="mt-3 flex flex-wrap gap-1">
-              {peptide.benefits.slice(0, 2).map((b, i) => (
-                <span key={i} className="text-xs bg-primary-50 text-primary-700 px-2 py-0.5 rounded">
-                  {b.length > 35 ? b.substring(0, 35) + "..." : b}
-                </span>
-              ))}
-            </div>
+            <p className="text-sm text-[var(--text-secondary)] line-clamp-2 leading-relaxed">{p.description}</p>
           </Link>
         ))}
       </div>
 
       {results.length === 0 && (
-        <div className="text-center py-12">
-          <p className="text-gray-500 text-lg">No peptides found matching your search.</p>
-          <button onClick={() => handleSearch("")} className="mt-3 text-primary-600 hover:underline text-sm">Clear search</button>
+        <div className="text-center py-20">
+          <p className="text-[var(--text-muted)] font-body">No peptides found.</p>
+          <button onClick={() => handleSearch("")} className="mt-3 font-mono text-xs text-[var(--accent)] hover:underline underline-offset-4">Clear search</button>
         </div>
       )}
     </div>
@@ -120,7 +100,7 @@ function PeptidesList() {
 
 export default function PeptidesPage() {
   return (
-    <Suspense fallback={<div className="max-w-7xl mx-auto px-4 py-8"><p>Loading...</p></div>}>
+    <Suspense fallback={<div className="max-w-7xl mx-auto px-6 py-16"><div className="h-8 w-48 bg-[var(--bg-card)] rounded animate-pulse" /></div>}>
       <PeptidesList />
     </Suspense>
   );
