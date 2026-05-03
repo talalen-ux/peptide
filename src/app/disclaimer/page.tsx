@@ -2,7 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Medical Disclaimer — Peptide Analyzer",
+  title: "Medical Disclaimer — BioNet Agents",
 };
 
 const sections = [
@@ -20,7 +20,7 @@ const sections = [
   },
   {
     title: "No Endorsement",
-    body: "The inclusion of any peptide on this platform does not constitute an endorsement or recommendation. We do not sell, distribute, or promote the purchase of any peptides. Links to research papers are for educational purposes only.",
+    body: "The inclusion of any peptide on this platform does not constitute an endorsement or recommendation. BioNet Agents does not sell, distribute, or promote the purchase of any peptides. Agent outputs and research analysis are for educational purposes only.",
   },
   {
     title: "Legal Status",
@@ -28,7 +28,7 @@ const sections = [
   },
   {
     title: "Assumption of Risk",
-    body: "By using this website, you acknowledge that the use of peptides carries inherent risks. PeptideAnalyzer and its creators are not liable for any adverse effects, damages, or consequences resulting from the use or misuse of information presented here.",
+    body: "By using this website, you acknowledge that the use of peptides carries inherent risks. BioNet Agents and its creators are not liable for any adverse effects, damages, or consequences resulting from the use or misuse of information presented here.",
   },
 ];
 
@@ -42,7 +42,7 @@ export default function DisclaimerPage() {
 
       <div className="card p-6 border-amber-900/30 bg-amber-950/5 mb-12">
         <p className="text-amber-200/70 font-heading font-medium leading-relaxed">
-          The information provided on PeptideAnalyzer is for educational and informational purposes only. It is not intended as a substitute for professional medical advice, diagnosis, or treatment.
+          The information provided on BioNet Agents is for educational and informational purposes only. It is not intended as a substitute for professional medical advice, diagnosis, or treatment.
         </p>
       </div>
 

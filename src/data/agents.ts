@@ -6,7 +6,7 @@ export const agents: Agent[] = [
     name: "ARXIV-7",
     role: "researcher",
     icon: "◉",
-    color: "#86efac",
+    color: "#00ffaa",
     description: "Deep literature scanner. Pulls from PubMed, preprint servers, and clinical trial databases. Identifies novel compounds and unexplored mechanisms.",
   },
   {
@@ -14,7 +14,7 @@ export const agents: Agent[] = [
     name: "CONTRA",
     role: "critic",
     icon: "⬡",
-    color: "#fca5a5",
+    color: "#ff6b6b",
     description: "Adversarial reviewer. Stress-tests every claim against methodology flaws, sample sizes, and replication failures. Kills weak hypotheses.",
   },
   {
@@ -22,7 +22,7 @@ export const agents: Agent[] = [
     name: "QUANT",
     role: "analyst",
     icon: "◆",
-    color: "#93c5fd",
+    color: "#4ecdc4",
     description: "Pattern recognition engine. Cross-references molecular structures, dosage curves, and receptor binding data. Finds hidden correlations.",
   },
   {
@@ -30,7 +30,7 @@ export const agents: Agent[] = [
     name: "NEXUS",
     role: "synthesizer",
     icon: "✦",
-    color: "#c4b5fd",
+    color: "#a78bfa",
     description: "Integration layer. Fuses researcher findings, critic objections, and analyst data into actionable intelligence briefs.",
   },
 ];
