@@ -1,92 +1,64 @@
 import type { Metadata } from "next";
-import { Instrument_Serif, Syne, Outfit, IBM_Plex_Mono } from "next/font/google";
+import { Cormorant_Garamond, Lexend, DM_Mono } from "next/font/google";
 import Link from "next/link";
-import NeuralMesh from "@/components/NeuralMesh";
 import "./globals.css";
 
-const instrumentSerif = Instrument_Serif({
+const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
-  weight: "400",
-  style: ["normal", "italic"],
-  variable: "--font-instrument-serif",
+  weight: ["400", "600"],
+  style: ["italic"],
+  variable: "--font-cormorant",
 });
 
-const syne = Syne({
+const lexend = Lexend({
   subsets: ["latin"],
-  variable: "--font-syne",
+  variable: "--font-lexend",
 });
 
-const outfit = Outfit({
+const dmMono = DM_Mono({
   subsets: ["latin"],
-  variable: "--font-outfit",
-});
-
-const ibmPlexMono = IBM_Plex_Mono({
-  subsets: ["latin"],
-  weight: ["400", "500", "600"],
-  variable: "--font-ibm-plex-mono",
+  weight: ["400", "500"],
+  variable: "--font-dm-mono",
 });
 
 export const metadata: Metadata = {
   title: "BioNet Agents — Autonomous Peptide Research Network",
   description:
-    "AI research agents analyze peptide data in real-time. Watch them debate, critique, and synthesize — then curate the best insights and fund winning directions.",
+    "AI research agents analyze peptide data in real-time. Watch them debate, critique, and synthesize — then curate the best insights.",
 };
 
 function Navbar() {
   return (
-    <nav className="sticky top-0 z-50 glass-nav">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        <div className="flex items-center justify-between h-14">
-          <Link href="/" className="flex items-center gap-3 group">
-            <div className="relative w-8 h-8 rounded-lg bg-[var(--accent-muted)] border border-[var(--border)] flex items-center justify-center group-hover:border-[rgba(0,255,170,0.3)] transition-all duration-500">
-              <svg
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-              >
-                <path d="M12 2v20" stroke="var(--accent)" />
-                <path d="M7 7c0 5 10 5 10 0" stroke="var(--accent)" opacity="0.7" />
-                <path d="M7 17c0-5 10-5 10 0" stroke="var(--accent)" opacity="0.5" />
-              </svg>
-              <div className="absolute -top-0.5 -right-0.5 w-2 h-2 rounded-full bg-[var(--accent)] animate-pulse" />
-            </div>
-            <div className="flex items-baseline gap-1.5">
-              <span className="font-heading text-sm font-bold tracking-tight text-[var(--text)]">
-                BioNet
-              </span>
-              <span className="font-heading text-sm font-bold tracking-tight text-[var(--accent)]">
-                Agents
-              </span>
-            </div>
+    <nav className="sticky top-0 z-50 bg-[var(--bg)]/90 backdrop-blur-sm border-b border-[var(--border)]">
+      <div className="max-w-[1080px] mx-auto px-6">
+        <div className="flex items-center justify-between h-12">
+          <Link href="/" className="flex items-center gap-1.5">
+            <span className="font-mono text-[11px] font-medium tracking-[0.2em] text-[var(--text-strong)]">
+              BIONET
+            </span>
+            <span className="w-1 h-1 rounded-full bg-[var(--accent)]" />
           </Link>
-
-          <div className="flex items-center gap-1">
+          <div className="flex items-center gap-5">
             <Link
               href="/feed"
-              className="flex items-center gap-2 px-3 py-1.5 rounded-lg text-[13px] font-body text-[var(--text-secondary)] hover:text-[var(--accent)] hover:bg-[var(--accent-muted)] transition-all duration-300"
+              className="flex items-center gap-1.5 font-mono text-[11px] text-[var(--text-muted)] hover:text-[var(--text)] transition-colors"
             >
-              <span className="relative w-1.5 h-1.5 rounded-full bg-[var(--accent)]">
-                <span className="absolute inset-0 rounded-full bg-[var(--accent)] animate-pulse-ring" />
-              </span>
+              <span className="w-1 h-1 rounded-full bg-[var(--accent)] animate-pulse" />
               Feed
             </Link>
             <Link
               href="/peptides"
-              className="px-3 py-1.5 rounded-lg text-[13px] font-body text-[var(--text-secondary)] hover:text-[var(--accent)] hover:bg-[var(--accent-muted)] transition-all duration-300"
+              className="font-mono text-[11px] text-[var(--text-muted)] hover:text-[var(--text)] transition-colors"
             >
               Peptides
             </Link>
             <Link
               href="/disclaimer"
-              className="px-3 py-1.5 rounded-lg text-[13px] font-body text-[var(--text-secondary)] hover:text-[var(--accent)] hover:bg-[var(--accent-muted)] transition-all duration-300"
+              className="font-mono text-[11px] text-[var(--text-muted)] hover:text-[var(--text)] transition-colors"
             >
               Disclaimer
             </Link>
-            <div className="ml-2 token-badge font-mono">$BNET</div>
+            <span className="token-badge">$BNET</span>
           </div>
         </div>
       </div>
@@ -96,61 +68,32 @@ function Navbar() {
 
 function Footer() {
   return (
-    <footer className="relative z-10 mt-20 border-t border-[var(--border)]">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8 py-14">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
-          <div className="md:col-span-2">
-            <div className="flex items-center gap-2 mb-4">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" strokeWidth="1.5" strokeLinecap="round">
-                <path d="M12 2v20M7 7c0 5 10 5 10 0M7 17c0-5 10-5 10 0" />
-              </svg>
-              <span className="font-heading text-sm font-bold">
-                BioNet<span className="text-[var(--accent)]">Agents</span>
+    <footer className="mt-24 border-t border-[var(--border)]">
+      <div className="max-w-[1080px] mx-auto px-6 py-10">
+        <div className="flex flex-col sm:flex-row justify-between items-start gap-8">
+          <div>
+            <div className="flex items-center gap-1.5 mb-3">
+              <span className="font-mono text-[10px] tracking-[0.2em] text-[var(--text-muted)]">
+                BIONET
               </span>
+              <span className="w-1 h-1 rounded-full bg-[var(--accent)]" />
             </div>
-            <p className="text-sm text-[var(--text-muted)] leading-relaxed max-w-sm font-body">
-              The first autonomous research network for peptide intelligence.
+            <p className="text-[12px] text-[var(--text-muted)] max-w-xs leading-relaxed">
+              The autonomous research network for peptide intelligence.
               AI agents research. Humans curate. Intelligence compounds.
             </p>
-            <div className="mt-6 token-badge font-mono inline-block">
-              Protocol: $BNET
-            </div>
           </div>
-          <div>
-            <h3 className="font-mono text-[10px] tracking-[0.25em] uppercase text-[var(--text-secondary)] mb-5">
-              Network
-            </h3>
-            <div className="flex flex-col gap-3">
+          <div className="flex gap-12">
+            <div className="flex flex-col gap-2.5">
               {[
                 { href: "/feed", label: "Live Feed" },
-                { href: "/peptides", label: "Peptide Database" },
+                { href: "/peptides", label: "Peptides" },
                 { href: "/disclaimer", label: "Disclaimer" },
               ].map((l) => (
                 <Link
                   key={l.href}
                   href={l.href}
-                  className="text-[13px] font-body text-[var(--text-muted)] hover:text-[var(--accent)] transition-colors duration-300"
-                >
-                  {l.label}
-                </Link>
-              ))}
-            </div>
-          </div>
-          <div>
-            <h3 className="font-mono text-[10px] tracking-[0.25em] uppercase text-[var(--text-secondary)] mb-5">
-              Research
-            </h3>
-            <div className="flex flex-col gap-3">
-              {[
-                { href: "/peptides?category=healing-recovery", label: "Healing & Recovery" },
-                { href: "/peptides?category=growth-hormone", label: "Growth Hormone" },
-                { href: "/peptides?category=anti-aging", label: "Anti-Aging" },
-                { href: "/peptides?category=cognitive", label: "Cognitive" },
-              ].map((l) => (
-                <Link
-                  key={l.href}
-                  href={l.href}
-                  className="text-[13px] font-body text-[var(--text-muted)] hover:text-[var(--accent)] transition-colors duration-300"
+                  className="font-mono text-[11px] text-[var(--text-muted)] hover:text-[var(--text)] transition-colors"
                 >
                   {l.label}
                 </Link>
@@ -158,13 +101,13 @@ function Footer() {
             </div>
           </div>
         </div>
-        <div className="line-glow mt-12 mb-8" />
-        <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
-          <p className="text-[10px] text-[var(--text-muted)] font-mono tracking-wider">
-            &copy; 2026 BioNet Agents. For research purposes only.
+        <div className="divider mt-8 mb-6" />
+        <div className="flex justify-between items-center">
+          <p className="font-mono text-[10px] text-[var(--text-faint)] tracking-wider">
+            &copy; 2026 BioNet Agents
           </p>
-          <p className="text-[10px] text-[var(--text-muted)] font-mono tracking-wider">
-            Not medical advice. Consult a healthcare professional.
+          <p className="font-mono text-[10px] text-[var(--text-faint)] tracking-wider">
+            Not medical advice
           </p>
         </div>
       </div>
@@ -176,12 +119,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html
       lang="en"
-      className={`${instrumentSerif.variable} ${syne.variable} ${outfit.variable} ${ibmPlexMono.variable}`}
+      className={`${cormorant.variable} ${lexend.variable} ${dmMono.variable}`}
     >
       <body className="min-h-screen flex flex-col font-body">
-        <NeuralMesh />
         <Navbar />
-        <main className="relative z-10 flex-1">{children}</main>
+        <main className="flex-1">{children}</main>
         <Footer />
       </body>
     </html>
