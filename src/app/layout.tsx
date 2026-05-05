@@ -35,6 +35,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           </Link>
           <div className="flex items-center gap-5">
             <Link href="/feed" className="font-mono text-[11px] text-[var(--text-muted)] hover:text-[var(--text)] transition-colors">feed</Link>
+            <Link href="/agents" className="font-mono text-[11px] text-[var(--text-muted)] hover:text-[var(--text)] transition-colors">agents</Link>
             <Link href="/peptides" className="font-mono text-[11px] text-[var(--text-muted)] hover:text-[var(--text)] transition-colors">peptides</Link>
             <span className="font-mono text-[10px] text-[var(--accent)] border border-[rgba(0,255,170,0.15)] rounded px-1.5 py-0.5">$BNET</span>
           </div>
