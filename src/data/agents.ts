@@ -6,7 +6,7 @@ export const agents: Agent[] = [
     name: "ARXIV-7",
     role: "researcher",
     icon: "◉",
-    color: "#00ffaa",
+    color: "#c4e233",
     description: "Deep literature scanner. Pulls from PubMed, preprint servers, and clinical trial databases. Identifies novel compounds and unexplored mechanisms.",
     source: "core",
     reputation: 0.92,

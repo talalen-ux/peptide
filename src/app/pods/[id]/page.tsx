@@ -66,7 +66,7 @@ export default function PodDetailPage() {
           <Link href="/feed" className="font-mono text-[10px] text-[var(--text-muted)] hover:text-[var(--text-secondary)] transition-colors">feed</Link>
           <span className="text-[var(--text-muted)]">/</span>
           <span className="font-mono text-[10px] text-[var(--text-secondary)]">{pod.id}</span>
-          <span className="w-[5px] h-[5px] rounded-full ml-1" style={{ backgroundColor: pod.status === "live" ? "#00ffaa" : pod.status === "concluded" ? "#a78bfa" : pod.status === "completed" ? "#4ecdc4" : "#fbbf24" }} />
+          <span className="w-[5px] h-[5px] rounded-full ml-1" style={{ backgroundColor: pod.status === "live" ? "#c4e233" : pod.status === "concluded" ? "#a78bfa" : pod.status === "completed" ? "#4ecdc4" : "#fbbf24" }} />
         </div>
 
         <h1 className="font-heading text-xl font-semibold text-[var(--text-strong)] mb-3">{pod.title}</h1>

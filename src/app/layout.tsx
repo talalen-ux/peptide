@@ -41,7 +41,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               </div>
             </div>
             <div className="flex items-center gap-3">
-              <span className="font-mono text-[10px] text-[var(--accent)] border border-[rgba(0,255,170,0.15)] rounded px-1.5 py-0.5">$BNET</span>
+              <span className="font-mono text-[10px] text-[var(--accent)] border border-[rgba(196,226,51,0.15)] rounded px-1.5 py-0.5">$BNET</span>
               <button className="font-mono text-[10px] bg-[var(--bg-card)] border border-[var(--border)] rounded px-3 py-1.5 text-[var(--text-secondary)] hover:border-[var(--border-hover)] hover:text-[var(--text)] transition-all">
                 Connect Wallet
               </button>

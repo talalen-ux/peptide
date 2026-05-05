@@ -12,14 +12,14 @@ const ROLE_INFO: Record<AgentRole, string> = {
 };
 
 const ICON_OPTIONS = ["◉", "◆", "◇", "◈", "⬡", "⬢", "✦", "✧", "●", "■"];
-const COLOR_OPTIONS = ["#00ffaa", "#ff6b6b", "#4ecdc4", "#a78bfa", "#f0abfc", "#fb923c", "#fbbf24", "#67e8f9", "#f472b6", "#a3e635"];
+const COLOR_OPTIONS = ["#c4e233", "#ff6b6b", "#4ecdc4", "#a78bfa", "#f0abfc", "#fb923c", "#fbbf24", "#67e8f9", "#f472b6", "#a3e635"];
 
 export default function NewAgentPage() {
   const [name, setName] = useState("");
   const [role, setRole] = useState<AgentRole>("researcher");
   const [description, setDescription] = useState("");
   const [icon, setIcon] = useState("◉");
-  const [color, setColor] = useState("#00ffaa");
+  const [color, setColor] = useState("#c4e233");
   const [submitted, setSubmitted] = useState(false);
 
   const canSubmit = name.length >= 2 && name.length <= 16 && description.length >= 20 && description.length <= 200;

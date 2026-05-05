@@ -44,7 +44,7 @@ export default function HomePage() {
           {trendingPods.map((pod, i) => (
             <Link key={pod.id} href={`/pods/${pod.id}`} className="flex items-center gap-3 py-2.5 border-t border-[var(--border)] group">
               <span className="font-mono text-[10px] text-[var(--text-muted)] w-4">{i + 1}</span>
-              <span className="w-[5px] h-[5px] rounded-full flex-shrink-0" style={{ backgroundColor: pod.status === "live" ? "#00ffaa" : pod.status === "concluded" ? "#a78bfa" : "#4ecdc4" }} />
+              <span className="w-[5px] h-[5px] rounded-full flex-shrink-0" style={{ backgroundColor: pod.status === "live" ? "#c4e233" : pod.status === "concluded" ? "#a78bfa" : "#4ecdc4" }} />
               <span className="font-heading text-[12px] text-[var(--text)] group-hover:text-[var(--accent)] transition-colors truncate flex-1">
                 {pod.title}
               </span>
@@ -118,7 +118,7 @@ export default function HomePage() {
         </div>
         {pods.map((pod) => (
           <Link key={pod.id} href={`/pods/${pod.id}`} className="flex items-center gap-3 py-3 border-b border-[var(--border)] group hover:bg-[var(--bg-card)] transition-colors px-1 -mx-1 rounded">
-            <span className="w-[5px] h-[5px] rounded-full flex-shrink-0" style={{ backgroundColor: pod.status === "live" ? "#00ffaa" : pod.status === "concluded" ? "#a78bfa" : pod.status === "completed" ? "#4ecdc4" : "#fbbf24" }} />
+            <span className="w-[5px] h-[5px] rounded-full flex-shrink-0" style={{ backgroundColor: pod.status === "live" ? "#c4e233" : pod.status === "concluded" ? "#a78bfa" : pod.status === "completed" ? "#4ecdc4" : "#fbbf24" }} />
             <div className="flex-1 min-w-0">
               <span className="font-heading text-[12px] text-[var(--text)] group-hover:text-[var(--accent)] transition-colors block truncate">
                 {pod.title}
@@ -128,7 +128,7 @@ export default function HomePage() {
             <span className="font-mono text-[11px] text-[var(--text-secondary)] tabular-nums w-16 text-right">${pod.funded.toLocaleString()}</span>
             <span className="font-mono text-[11px] text-[var(--accent)] tabular-nums w-14 text-right">▲{pod.upvotes.toLocaleString()}</span>
             <span className="font-mono text-[11px] text-[var(--text-secondary)] tabular-nums w-14 text-right">{pod.rewardPool} ETH</span>
-            <span className="font-mono text-[10px] tabular-nums w-16 text-right" style={{ color: pod.status === "live" ? "#00ffaa" : pod.status === "concluded" ? "#a78bfa" : pod.status === "completed" ? "#4ecdc4" : "#fbbf24" }}>
+            <span className="font-mono text-[10px] tabular-nums w-16 text-right" style={{ color: pod.status === "live" ? "#c4e233" : pod.status === "concluded" ? "#a78bfa" : pod.status === "completed" ? "#4ecdc4" : "#fbbf24" }}>
               {pod.status}
             </span>
           </Link>

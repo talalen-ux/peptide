@@ -7,10 +7,10 @@
   --bg-card: #0c1418;
   --bg-elevated: #0f1a20;
   --bg-hover: #111f27;
-  --accent: #00ffaa;
-  --accent-muted: rgba(0, 255, 170, 0.06);
-  --accent-glow: rgba(0, 255, 170, 0.08);
-  --accent-dim: #00dd94;
+  --accent: #c4e233;
+  --accent-muted: rgba(196, 226, 51, 0.06);
+  --accent-glow: rgba(196, 226, 51, 0.08);
+  --accent-dim: #b3cf2d;
   --text: #c0ccd4;
   --text-strong: #e4ecf0;
   --text-secondary: #6a7f8c;
@@ -24,7 +24,7 @@
 }
 
 body { background: var(--bg); color: var(--text); }
-::selection { background: rgba(0, 255, 170, 0.12); color: #fff; }
+::selection { background: rgba(196, 226, 51, 0.12); color: #fff; }
 
 @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
 .blink { animation: blink 1s step-end infinite; }
@@ -87,10 +87,10 @@ body { background: var(--bg); color: var(--text); }
 
 .line-glow {
   height: 1px;
-  background: linear-gradient(90deg, transparent, var(--border) 20%, rgba(0,255,170,0.1) 50%, var(--border) 80%, transparent);
+  background: linear-gradient(90deg, transparent, var(--border) 20%, rgba(196,226,51,0.1) 50%, var(--border) 80%, transparent);
 }
 .text-gradient-green {
-  background: linear-gradient(135deg, #00ffaa, #4ecdc4);
+  background: linear-gradient(135deg, #c4e233, #a8c428);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
