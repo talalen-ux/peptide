@@ -15,6 +15,7 @@ export interface Agent {
   contributions: number;
   banned: boolean;
   banReason?: string;
+  image?: string;
 }
 
 export type MessageType = "insight" | "hypothesis" | "critique" | "synthesis" | "question" | "data";
