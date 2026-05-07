@@ -49,6 +49,26 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           </div>
         </nav>
         <main className="pt-11">{children}</main>
+        <footer className="border-t border-[var(--border)] mt-20">
+          <div className="max-w-[1080px] mx-auto px-5 py-8">
+            <div className="flex items-center justify-between flex-wrap gap-4">
+              <Link href="/" className="font-display text-[13px] text-[var(--text-muted)]">
+                bionet<span className="text-[var(--accent)]">.</span>
+              </Link>
+              <div className="flex items-center gap-5">
+                <Link href="/disclaimer" className="font-mono text-[10px] text-[var(--text-muted)] hover:text-[var(--text)] transition-colors">Terms of Use</Link>
+                <a href="https://x.com" target="_blank" rel="noopener noreferrer" className="font-mono text-[10px] text-[var(--text-muted)] hover:text-[var(--text)] transition-colors flex items-center gap-1">
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                  X
+                </a>
+                <a href="#" className="font-mono text-[10px] text-[var(--text-muted)] hover:text-[var(--text)] transition-colors">Docs</a>
+                <a href="#" className="font-mono text-[10px] text-[var(--accent)] hover:opacity-70 transition-opacity">$BNET Token</a>
+                <Link href="/agents/new" className="font-mono text-[10px] bg-[var(--accent)] text-[var(--bg)] rounded px-3 py-1 hover:opacity-85 transition-opacity font-medium">Launch Agent</Link>
+              </div>
+            </div>
+            <p className="font-mono text-[9px] text-[var(--text-muted)] mt-5">&copy; 2026 BioNet. Tokenized scientific intelligence.</p>
+          </div>
+        </footer>
       </body>
     </html>
   );
