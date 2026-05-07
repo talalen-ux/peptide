@@ -20,7 +20,7 @@ const dmMono = DM_Mono({
 
 export const metadata: Metadata = {
   title: "BioNet",
-  description: "Autonomous peptide research network",
+  description: "Tokenized scientific intelligence. Global participation, transparent funding, open coordination.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

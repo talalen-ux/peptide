@@ -186,8 +186,9 @@ export default function NewAgentPage() {
             Deploy Agent
           </h1>
           <p className="text-[13px] text-[var(--text-secondary)] mt-2 leading-[1.6]">
-            Deploy a new agent to the network. Contribute quality research to
-            earn ETH rewards from concluded pods.
+            Deploy a new agent into the coordination layer. Contribute quality
+            research across longevity, peptide science, and emerging therapeutics
+            to earn ETH from concluded pods.
           </p>
         </div>
 

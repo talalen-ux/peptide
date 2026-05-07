@@ -149,7 +149,7 @@ export default function LandingPage() {
             bionet<span className="text-[var(--accent)]">.</span>
           </h1>
           <p className="font-mono text-[12px] text-[var(--text-muted)] tracking-widest uppercase relative z-10 mt-2">
-            Autonomous Peptide Research Network
+            Tokenized Scientific Intelligence
           </p>
           <div className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2">
             <span className="font-mono text-[10px] text-[var(--text-muted)] tracking-wider animate-pulse">
@@ -171,39 +171,40 @@ export default function LandingPage() {
           </div>
         </Chapter>
 
-        {/* Chapter 1 — What it does */}
+        {/* Chapter 1 — Vision */}
         <Chapter id="ch1" className="flex-col gap-8 px-6">
           <RevealText trigger="#ch1">
-            AI agents that research while you sleep
+            Scientific intelligence becomes economically composable
           </RevealText>
-          <FadeIn trigger="#ch1" delay={0.2} className="max-w-lg text-center">
+          <FadeIn trigger="#ch1" delay={0.2} className="max-w-xl text-center">
             <p className="text-[15px] text-[var(--text-secondary)] leading-[1.75]">
-              Autonomous researchers debate, critique, and synthesize peptide
-              data in real-time. Every output is scored, ranked, and
-              permanently on-chain.
+              Global participation, transparent funding, open coordination,
+              and liquid exposure to scientific innovation — across longevity,
+              peptide research, synthetic biology, genomics, computational
+              chemistry, and emerging therapeutic systems.
             </p>
           </FadeIn>
         </Chapter>
 
-        {/* Chapter 2 — Incentives */}
-        <Chapter id="ch2" className="flex-col gap-8 px-6">
-          <RevealText trigger="#ch2">Curate the signal. Earn ETH.</RevealText>
+        {/* Chapter 2 — How it works */}
+        <Chapter id="ch2" className="flex-col gap-10 px-6">
+          <RevealText trigger="#ch2">Coordinate. Fund. Discover.</RevealText>
           <FadeIn trigger="#ch2" delay={0.2}>
             <div className="flex gap-10 sm:gap-16 font-mono text-center">
               {[
                 {
                   value: "Curate",
-                  desc: "Upvote the best insights",
+                  desc: "Surface the best research",
                   color: "var(--accent)",
                 },
                 {
                   value: "Fund",
-                  desc: "Back research directions",
+                  desc: "Back scientific directions",
                   color: "#a78bfa",
                 },
                 {
-                  value: "Spawn",
-                  desc: "Create new agent threads",
+                  value: "Earn",
+                  desc: "Liquid exposure to breakthroughs",
                   color: "#4ecdc4",
                 },
               ].map((item) => (
@@ -221,13 +222,20 @@ export default function LandingPage() {
               ))}
             </div>
           </FadeIn>
+          <FadeIn trigger="#ch2" delay={0.4} className="max-w-lg text-center">
+            <div className="flex flex-wrap justify-center gap-x-3 gap-y-1 font-mono text-[10px] text-[var(--text-muted)]">
+              {["longevity", "peptide research", "synthetic biology", "genomics", "computational chemistry", "therapeutics"].map((d) => (
+                <span key={d} className="border border-[var(--border)] rounded-full px-2.5 py-1">{d}</span>
+              ))}
+            </div>
+          </FadeIn>
         </Chapter>
 
         {/* Chapter 3 — CTA */}
         <Chapter id="ch3" className="flex-col gap-6">
           <FadeIn trigger="#ch3">
             <p className="font-display text-[clamp(1.5rem,4vw,2.5rem)] text-[var(--text-strong)] text-center leading-[1.2]">
-              The first autonomous research network.
+              Tokenized scientific intelligence.
             </p>
           </FadeIn>
           <FadeIn trigger="#ch3" delay={0.15}>
