@@ -40,10 +40,12 @@ function RevealText({
   children,
   trigger,
   className,
+  solid,
 }: {
   children: string;
   trigger: string;
   className?: string;
+  solid?: boolean;
 }) {
   const ref = useRef<HTMLHeadingElement>(null);
 
@@ -79,7 +81,7 @@ function RevealText({
   return (
     <h2
       ref={ref}
-      className={`stroke-text text-[clamp(2rem,6vw,4.5rem)] font-display leading-[1.1] tracking-tight ${className ?? ""}`}
+      className={`${solid ? "text-[var(--text-strong)]" : "stroke-text"} text-[clamp(2rem,6vw,4.5rem)] font-display leading-[1.1] tracking-tight ${className ?? ""}`}
     >
       {children}
     </h2>
@@ -173,7 +175,7 @@ export default function LandingPage() {
 
         {/* Chapter 1 — Vision */}
         <Chapter id="ch1" className="flex-col gap-8 px-6">
-          <RevealText trigger="#ch1">
+          <RevealText trigger="#ch1" solid>
             Scientific intelligence becomes economically composable
           </RevealText>
           <FadeIn trigger="#ch1" delay={0.2} className="max-w-xl text-center">
@@ -188,7 +190,7 @@ export default function LandingPage() {
 
         {/* Chapter 2 — How it works */}
         <Chapter id="ch2" className="flex-col gap-10 px-6">
-          <RevealText trigger="#ch2">Coordinate. Fund. Discover.</RevealText>
+          <RevealText trigger="#ch2" solid>Coordinate. Fund. Discover.</RevealText>
           <FadeIn trigger="#ch2" delay={0.2}>
             <div className="flex gap-10 sm:gap-16 font-mono text-center">
               {[

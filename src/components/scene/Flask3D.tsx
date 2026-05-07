@@ -90,6 +90,9 @@ function Bubble({
 export function Flask3D() {
   const groupRef = useRef<THREE.Group>(null!);
   const liquidRef = useRef<THREE.Mesh>(null!);
+  const liquidMatRef = useRef<THREE.MeshStandardMaterial>(null!);
+  const glowLightRef = useRef<THREE.PointLight>(null!);
+  const glowRingRef = useRef<THREE.Mesh>(null!);
 
   const clipPlane = useMemo(
     () => new THREE.Plane(new THREE.Vector3(0, -1, 0), 0.2),
@@ -102,7 +105,7 @@ export function Flask3D() {
     []
   );
 
-  useFrame(() => {
+  useFrame((_, delta) => {
     const { progress, mouse } = useScene.getState();
 
     const heroWeight = 1 - THREE.MathUtils.smoothstep(progress, 0.05, 0.2);
@@ -128,6 +131,36 @@ export function Flask3D() {
       .set(Math.sin(tiltX * 2), -1, Math.sin(tiltZ * 2))
       .normalize();
     clipPlane.constant = liquidLevel;
+
+    // Scroll-driven highlight: subtle pulse that peaks mid-scroll
+    const highlight = Math.sin(progress * Math.PI) * 0.6;
+    if (liquidMatRef.current) {
+      liquidMatRef.current.emissiveIntensity = THREE.MathUtils.damp(
+        liquidMatRef.current.emissiveIntensity,
+        0.4 + highlight * 0.8,
+        3,
+        delta
+      );
+      liquidMatRef.current.opacity = THREE.MathUtils.damp(
+        liquidMatRef.current.opacity,
+        0.7 + highlight * 0.2,
+        3,
+        delta
+      );
+    }
+    if (glowLightRef.current) {
+      glowLightRef.current.intensity = THREE.MathUtils.damp(
+        glowLightRef.current.intensity,
+        1.5 + highlight * 3,
+        3,
+        delta
+      );
+    }
+    if (glowRingRef.current) {
+      glowRingRef.current.scale.setScalar(1 + highlight * 0.15);
+      (glowRingRef.current.material as THREE.MeshBasicMaterial).opacity =
+        0.03 + highlight * 0.06;
+    }
   });
 
   const bubbles = useMemo(
@@ -172,6 +205,7 @@ export function Flask3D() {
       {/* Liquid */}
       <mesh ref={liquidRef} geometry={liquidGeo}>
         <meshStandardMaterial
+          ref={liquidMatRef}
           color="#c4e233"
           emissive="#c4e233"
           emissiveIntensity={0.4}
@@ -188,8 +222,21 @@ export function Flask3D() {
         <Bubble key={i} {...b} />
       ))}
 
+      {/* Glow ring — subtle lime halo that pulses with scroll */}
+      <mesh ref={glowRingRef} position={[0, 0.4, 0]} rotation={[Math.PI / 2, 0, 0]}>
+        <ringGeometry args={[1.3, 2.8, 48]} />
+        <meshBasicMaterial
+          color="#c4e233"
+          transparent
+          opacity={0.03}
+          side={THREE.DoubleSide}
+          depthWrite={false}
+        />
+      </mesh>
+
       {/* Inner glow */}
       <pointLight
+        ref={glowLightRef}
         position={[0, 0, 0]}
         intensity={1.5}
         color="#c4e233"
