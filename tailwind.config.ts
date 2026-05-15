@@ -10,8 +10,8 @@ const config: Config = {
     extend: {
       fontFamily: {
         display: ["var(--font-young-serif)", "Georgia", "serif"],
-        heading: ["var(--font-archivo)", "system-ui", "sans-serif"],
-        body: ["var(--font-archivo)", "system-ui", "sans-serif"],
+        heading: ["var(--font-inter)", "system-ui", "sans-serif"],
+        body: ["var(--font-inter)", "system-ui", "sans-serif"],
         mono: ["var(--font-dm-mono)", "monospace"],
       },
     },

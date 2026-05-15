@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Young_Serif, Archivo, DM_Mono } from "next/font/google";
+import { Young_Serif, Inter, DM_Mono } from "next/font/google";
 import Link from "next/link";
 import "./globals.css";
 
@@ -8,9 +8,9 @@ const youngSerif = Young_Serif({
   weight: "400",
   variable: "--font-young-serif",
 });
-const archivo = Archivo({
+const inter = Inter({
   subsets: ["latin"],
-  variable: "--font-archivo",
+  variable: "--font-inter",
 });
 const dmMono = DM_Mono({
   subsets: ["latin"],
@@ -25,7 +25,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${youngSerif.variable} ${archivo.variable} ${dmMono.variable}`}>
+    <html lang="en" className={`${youngSerif.variable} ${inter.variable} ${dmMono.variable}`}>
       <body className="min-h-screen font-body">
         <nav className="fixed top-0 left-0 right-0 z-50 bg-[var(--bg)]/95 backdrop-blur-sm border-b border-[var(--border)]">
           <div className="max-w-[1080px] mx-auto px-5 h-11 flex items-center justify-between">
