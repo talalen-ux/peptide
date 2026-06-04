@@ -130,7 +130,7 @@ html.lenis, html.lenis body { height: auto; }
   font-size: 11px;
   flex-wrap: wrap;
 }
-.stat-bar .stat-value { color: var(--text-strong); font-weight: 500; }
+.stat-bar .stat-value { color: var(--text-strong); font-weight: 500; font-family: var(--font-young-serif); }
 .stat-bar .stat-label { color: var(--text-muted); margin-left: 4px; }
 
 .row {

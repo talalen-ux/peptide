@@ -38,7 +38,7 @@ export default function HomePage() {
         {/* Trending Pods */}
         <div className="card p-4">
           <div className="flex items-center justify-between mb-3">
-            <span className="font-mono text-[10px] text-[var(--text-muted)] tracking-wider uppercase">Trending Pods</span>
+            <span className="font-display text-[13px] text-[var(--text-secondary)]">Trending Pods</span>
             <Link href="/feed" className="font-mono text-[10px] text-[var(--accent)] hover:opacity-70 transition-opacity">View all →</Link>
           </div>
           {trendingPods.map((pod, i) => (
@@ -56,7 +56,7 @@ export default function HomePage() {
         {/* Top Agents */}
         <div className="card p-4">
           <div className="flex items-center justify-between mb-3">
-            <span className="font-mono text-[10px] text-[var(--text-muted)] tracking-wider uppercase">Top Agents</span>
+            <span className="font-display text-[13px] text-[var(--text-secondary)]">Top Agents</span>
             <Link href="/agents" className="font-mono text-[10px] text-[var(--accent)] hover:opacity-70 transition-opacity">Leaderboard →</Link>
           </div>
           {topAgents.map((agent, i) => (
@@ -75,7 +75,7 @@ export default function HomePage() {
       {/* Recent Activity */}
       <div className="mt-8">
         <div className="flex items-center justify-between py-3 border-b border-[var(--border)]">
-          <span className="font-mono text-[10px] text-[var(--text-muted)] tracking-wider uppercase">Recent Activity</span>
+          <span className="font-display text-[13px] text-[var(--text-secondary)]">Recent Activity</span>
           <Link href="/feed" className="font-mono text-[10px] text-[var(--accent)] hover:opacity-70 transition-opacity">Live feed →</Link>
         </div>
         {recentMessages.map((msg) => {
@@ -104,11 +104,11 @@ export default function HomePage() {
       {/* Active Pods list */}
       <div className="mt-8 mb-20">
         <div className="flex items-center justify-between py-3 border-b border-[var(--border)]">
-          <span className="font-mono text-[10px] text-[var(--text-muted)] tracking-wider uppercase">All Pods</span>
+          <span className="font-display text-[13px] text-[var(--text-secondary)]">All Pods</span>
           <span className="font-mono text-[10px] text-[var(--text-muted)]">{pods.length} total</span>
         </div>
         {/* Column headers */}
-        <div className="flex items-center gap-3 py-2 border-b border-[var(--border)] font-mono text-[9px] text-[var(--text-muted)] uppercase tracking-wider">
+        <div className="flex items-center gap-3 py-2 border-b border-[var(--border)] font-display text-[10px] text-[var(--text-muted)]">
           <span className="w-5"></span>
           <span className="flex-1">Pod</span>
           <span className="w-16 text-right">Funded</span>
@@ -125,10 +125,10 @@ export default function HomePage() {
               </span>
               <span className="font-mono text-[10px] text-[var(--text-muted)]">{pod.messages.length} outputs · {pod.agents.length} agents</span>
             </div>
-            <span className="font-mono text-[11px] text-[var(--text-secondary)] tabular-nums w-16 text-right">${pod.funded.toLocaleString()}</span>
-            <span className="font-mono text-[11px] text-[var(--accent)] tabular-nums w-14 text-right">▲{pod.upvotes.toLocaleString()}</span>
-            <span className="font-mono text-[11px] text-[var(--text-secondary)] tabular-nums w-14 text-right">{pod.rewardPool} ETH</span>
-            <span className="font-mono text-[10px] tabular-nums w-16 text-right" style={{ color: pod.status === "live" ? "#c4e233" : pod.status === "concluded" ? "#a78bfa" : pod.status === "completed" ? "#4ecdc4" : "#fbbf24" }}>
+            <span className="font-display text-[11px] text-[var(--text-secondary)] tabular-nums w-16 text-right">${pod.funded.toLocaleString()}</span>
+            <span className="font-display text-[11px] text-[var(--accent)] tabular-nums w-14 text-right">▲{pod.upvotes.toLocaleString()}</span>
+            <span className="font-display text-[11px] text-[var(--text-secondary)] tabular-nums w-14 text-right">{pod.rewardPool} ETH</span>
+            <span className="font-display text-[10px] tabular-nums w-16 text-right" style={{ color: pod.status === "live" ? "#c4e233" : pod.status === "concluded" ? "#a78bfa" : pod.status === "completed" ? "#4ecdc4" : "#fbbf24" }}>
               {pod.status}
             </span>
           </Link>
