@@ -1,7 +1,6 @@
 "use client";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { Scene } from "@/components/scene/Scene";
 import { initScroll } from "@/lib/scroll";
 import { useScene } from "@/lib/store";
 import { getAllPods } from "@/data/pods";
@@ -9,6 +8,12 @@ import { getActiveAgents } from "@/data/agents";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import SplitType from "split-type";
+import dynamic from "next/dynamic";
+
+const Scene = dynamic(
+  () => import("@/components/scene/Scene").then((m) => m.Scene),
+  { ssr: false }
+);
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -81,7 +86,7 @@ function RevealText({
   return (
     <h2
       ref={ref}
-      className={`${solid ? "text-[var(--text-strong)]" : "stroke-text"} text-[clamp(2rem,6vw,4.5rem)] font-display leading-[1.1] tracking-tight ${className ?? ""}`}
+      className={`${solid ? "text-[var(--text-strong)]" : "stroke-text"} text-[clamp(1.6rem,5vw,3.5rem)] sm:text-[clamp(2rem,6vw,4.5rem)] font-display leading-[1.1] tracking-tight ${className ?? ""}`}
     >
       {children}
     </h2>
@@ -131,154 +136,144 @@ function FadeIn({
 
 export default function LandingPage() {
   const reducedMotion = useScene((s) => s.reducedMotion);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 640);
+    check();
+    window.addEventListener("resize", check);
     const lenis = initScroll();
-    return () => lenis.destroy();
+    return () => {
+      lenis.destroy();
+      window.removeEventListener("resize", check);
+    };
   }, []);
+
+  const showScene = !reducedMotion && !isMobile;
 
   return (
     <>
-      {/* Pinned 3D scene */}
-      <div className="fixed inset-0 -z-10">
-        {!reducedMotion && <Scene />}
-      </div>
+      {/* Pinned 3D scene — desktop only */}
+      {showScene && (
+        <div className="fixed inset-0 -z-10">
+          <Scene />
+        </div>
+      )}
+
+      {/* Mobile: static gradient background instead of WebGL */}
+      {!showScene && (
+        <div className="fixed inset-0 -z-10">
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                "radial-gradient(ellipse 60% 40% at 50% 40%, rgba(196,226,51,0.06) 0%, transparent 70%)",
+            }}
+          />
+        </div>
+      )}
 
       <main>
         {/* Chapter 0 — Hero */}
-        <Chapter id="ch0" className="flex-col gap-4">
-          <h1 className="font-display text-[clamp(4rem,14vw,8rem)] text-[var(--text-strong)] leading-none tracking-tight relative z-10">
-            bionet<span className="text-[var(--accent)]">.</span>
-          </h1>
-          <p className="font-mono text-[12px] text-[var(--text-muted)] tracking-widest uppercase relative z-10 mt-2">
-            Tokenized Scientific Intelligence
-          </p>
-          <div className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2">
+        <Chapter id="ch0" className="flex-col gap-3 sm:gap-4 px-6">
+          {/* Text backdrop for readability */}
+          <div className="relative z-10 flex flex-col items-center text-center">
+            <div className="px-6 py-8 sm:py-10 rounded-lg" style={{ background: "rgba(6,10,12,0.6)", backdropFilter: "blur(12px)", WebkitBackdropFilter: "blur(12px)" }}>
+              <h1 className="font-display text-[clamp(3rem,12vw,7rem)] text-[var(--text-strong)] leading-none tracking-tight">
+                bionet<span className="text-[var(--accent)]">.</span>
+              </h1>
+              <p className="font-mono text-[11px] sm:text-[12px] text-[var(--text-muted)] tracking-[0.2em] uppercase mt-3">
+                Tokenized Scientific Intelligence
+              </p>
+            </div>
+          </div>
+          <div className="absolute bottom-10 sm:bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2">
             <span className="font-mono text-[10px] text-[var(--text-muted)] tracking-wider animate-pulse">
               scroll
             </span>
-            <svg
-              width="12"
-              height="24"
-              viewBox="0 0 12 24"
-              fill="none"
-              className="opacity-30"
-            >
-              <path
-                d="M6 0v20m0 0l-4-4m4 4l4-4"
-                stroke="var(--text-muted)"
-                strokeWidth="1"
-              />
+            <svg width="12" height="20" viewBox="0 0 12 20" fill="none" className="opacity-30">
+              <path d="M6 0v16m0 0l-4-4m4 4l4-4" stroke="var(--text-muted)" strokeWidth="1" />
             </svg>
           </div>
         </Chapter>
 
         {/* Chapter 1 — Vision */}
-        <Chapter id="ch1" className="flex-col gap-8 px-6">
-          <RevealText trigger="#ch1" solid>
-            Scientific intelligence becomes economically composable
-          </RevealText>
-          <FadeIn trigger="#ch1" delay={0.2} className="max-w-xl text-center">
-            <p className="text-[15px] text-[var(--text-secondary)] leading-[1.75]">
-              Global participation, transparent funding, open coordination,
-              and liquid exposure to scientific innovation — across longevity,
-              peptide research, synthetic biology, genomics, computational
-              chemistry, and emerging therapeutic systems.
-            </p>
-          </FadeIn>
+        <Chapter id="ch1" className="flex-col gap-6 sm:gap-8 px-6">
+          <div className="relative z-10 max-w-2xl text-center px-4 py-8 sm:py-10 rounded-lg mx-4" style={{ background: "rgba(6,10,12,0.55)", backdropFilter: "blur(8px)", WebkitBackdropFilter: "blur(8px)" }}>
+            <RevealText trigger="#ch1" solid>
+              Scientific intelligence becomes economically composable
+            </RevealText>
+            <FadeIn trigger="#ch1" delay={0.2} className="mt-6">
+              <p className="text-[13px] sm:text-[15px] text-[var(--text-secondary)] leading-[1.75]">
+                Global participation, transparent funding, open coordination,
+                and liquid exposure to scientific innovation — across longevity,
+                peptide research, synthetic biology, genomics, computational
+                chemistry, and emerging therapeutic systems.
+              </p>
+            </FadeIn>
+          </div>
         </Chapter>
 
         {/* Chapter 2 — How it works */}
-        <Chapter id="ch2" className="flex-col gap-10 px-6">
-          <RevealText trigger="#ch2" solid>Coordinate. Fund. Discover.</RevealText>
-          <FadeIn trigger="#ch2" delay={0.2}>
-            <div className="flex gap-10 sm:gap-16 font-mono text-center">
-              {[
-                {
-                  value: "Curate",
-                  desc: "Surface the best research",
-                  color: "var(--accent)",
-                },
-                {
-                  value: "Fund",
-                  desc: "Back scientific directions",
-                  color: "#a78bfa",
-                },
-                {
-                  value: "Earn",
-                  desc: "Liquid exposure to breakthroughs",
-                  color: "#4ecdc4",
-                },
-              ].map((item) => (
-                <div key={item.value}>
-                  <p
-                    className="text-[18px] font-semibold mb-1"
-                    style={{ color: item.color }}
-                  >
-                    {item.value}
-                  </p>
-                  <p className="text-[10px] text-[var(--text-muted)] tracking-wider">
-                    {item.desc}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </FadeIn>
-          <FadeIn trigger="#ch2" delay={0.4} className="max-w-lg text-center">
-            <div className="flex flex-wrap justify-center gap-x-3 gap-y-1 font-mono text-[10px] text-[var(--text-muted)]">
-              {["longevity", "peptide research", "synthetic biology", "genomics", "computational chemistry", "therapeutics"].map((d) => (
-                <span key={d} className="border border-[var(--border)] rounded-full px-2.5 py-1">{d}</span>
-              ))}
-            </div>
-          </FadeIn>
+        <Chapter id="ch2" className="flex-col gap-8 sm:gap-10 px-6">
+          <div className="relative z-10 max-w-2xl text-center px-4 py-8 sm:py-10 rounded-lg mx-4" style={{ background: "rgba(6,10,12,0.55)", backdropFilter: "blur(8px)", WebkitBackdropFilter: "blur(8px)" }}>
+            <RevealText trigger="#ch2" solid>Coordinate. Fund. Discover.</RevealText>
+            <FadeIn trigger="#ch2" delay={0.2} className="mt-8">
+              <div className="flex gap-8 sm:gap-16 font-mono text-center justify-center">
+                {[
+                  { value: "Curate", desc: "Surface the best research", color: "var(--accent)" },
+                  { value: "Fund", desc: "Back scientific directions", color: "#a78bfa" },
+                  { value: "Earn", desc: "Liquid exposure to breakthroughs", color: "#4ecdc4" },
+                ].map((item) => (
+                  <div key={item.value}>
+                    <p className="text-[16px] sm:text-[18px] font-semibold mb-1" style={{ color: item.color }}>
+                      {item.value}
+                    </p>
+                    <p className="text-[9px] sm:text-[10px] text-[var(--text-muted)] tracking-wider max-w-[100px]">
+                      {item.desc}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </FadeIn>
+            <FadeIn trigger="#ch2" delay={0.4} className="mt-6">
+              <div className="flex flex-wrap justify-center gap-2 font-mono text-[9px] sm:text-[10px] text-[var(--text-muted)]">
+                {["longevity", "peptide research", "synthetic biology", "genomics", "computational chemistry", "therapeutics"].map((d) => (
+                  <span key={d} className="border border-[var(--border)] rounded-full px-2 sm:px-2.5 py-1">{d}</span>
+                ))}
+              </div>
+            </FadeIn>
+          </div>
         </Chapter>
 
         {/* Chapter 3 — CTA */}
-        <Chapter id="ch3" className="flex-col gap-6">
-          <FadeIn trigger="#ch3">
-            <p className="font-display text-[clamp(1.5rem,4vw,2.5rem)] text-[var(--text-strong)] text-center leading-[1.2]">
-              Tokenized scientific intelligence.
-            </p>
-          </FadeIn>
-          <FadeIn trigger="#ch3" delay={0.15}>
-            <Link
-              href="/dashboard"
-              className="font-mono text-[13px] bg-[var(--accent)] text-[var(--bg)] rounded px-10 py-3.5 hover:opacity-85 transition-opacity font-medium tracking-wide inline-block"
-            >
-              Launch App →
-            </Link>
-          </FadeIn>
-          <FadeIn trigger="#ch3" delay={0.3}>
-            <div className="flex items-center gap-4 sm:gap-6 flex-wrap justify-center font-mono text-[10px] text-[var(--text-muted)] mt-4">
-              <span>
-                <span className="text-[var(--text-secondary)]">
-                  {activeAgents.length}
-                </span>{" "}
-                agents
-              </span>
-              <span className="text-[var(--border-hover)]">·</span>
-              <span>
-                <span className="text-[var(--text-secondary)]">
-                  {pods.length}
-                </span>{" "}
-                pods
-              </span>
-              <span className="text-[var(--border-hover)]">·</span>
-              <span>
-                <span className="text-[var(--text-secondary)]">
-                  ${(totalFunded / 1000).toFixed(0)}k
-                </span>{" "}
-                funded
-              </span>
-              <span className="text-[var(--border-hover)]">·</span>
-              <span>
-                <span className="text-[var(--text-secondary)]">
-                  {totalRewards.toFixed(1)}
-                </span>{" "}
-                ETH earned
-              </span>
-            </div>
-          </FadeIn>
+        <Chapter id="ch3" className="flex-col gap-5 sm:gap-6 px-6">
+          <div className="relative z-10 text-center px-6 py-8 sm:py-10 rounded-lg" style={{ background: "rgba(6,10,12,0.55)", backdropFilter: "blur(8px)", WebkitBackdropFilter: "blur(8px)" }}>
+            <FadeIn trigger="#ch3">
+              <p className="font-display text-[clamp(1.3rem,3.5vw,2.5rem)] text-[var(--text-strong)] text-center leading-[1.2]">
+                Tokenized scientific intelligence.
+              </p>
+            </FadeIn>
+            <FadeIn trigger="#ch3" delay={0.15} className="mt-6">
+              <Link
+                href="/dashboard"
+                className="font-mono text-[12px] sm:text-[13px] bg-[var(--accent)] text-[var(--bg)] rounded px-8 sm:px-10 py-3 sm:py-3.5 hover:opacity-85 transition-opacity font-medium tracking-wide inline-block"
+              >
+                Launch App →
+              </Link>
+            </FadeIn>
+            <FadeIn trigger="#ch3" delay={0.3} className="mt-8">
+              <div className="flex items-center gap-3 sm:gap-6 flex-wrap justify-center font-mono text-[9px] sm:text-[10px] text-[var(--text-muted)]">
+                <span><span className="text-[var(--text-secondary)]">{activeAgents.length}</span> agents</span>
+                <span className="text-[var(--border-hover)]">·</span>
+                <span><span className="text-[var(--text-secondary)]">{pods.length}</span> pods</span>
+                <span className="text-[var(--border-hover)]">·</span>
+                <span><span className="text-[var(--text-secondary)]">${(totalFunded / 1000).toFixed(0)}k</span> funded</span>
+                <span className="text-[var(--border-hover)]">·</span>
+                <span><span className="text-[var(--text-secondary)]">{totalRewards.toFixed(1)}</span> ETH earned</span>
+              </div>
+            </FadeIn>
+          </div>
         </Chapter>
       </main>
     </>
