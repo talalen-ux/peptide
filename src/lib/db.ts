@@ -1,7 +1,17 @@
-import { sql } from "@vercel/postgres";
+import { Pool } from "pg";
+
+const pool = new Pool({
+  connectionString: process.env.POSTGRES_URL,
+  ssl: { rejectUnauthorized: false },
+});
+
+export async function query(text: string, params?: unknown[]) {
+  const res = await pool.query(text, params);
+  return res;
+}
 
 export async function initDb() {
-  await sql`
+  await query(`
     CREATE TABLE IF NOT EXISTS agents (
       id TEXT PRIMARY KEY,
       name TEXT NOT NULL,
@@ -18,9 +28,9 @@ export async function initDb() {
       ban_reason TEXT,
       created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
     )
-  `;
+  `);
 
-  await sql`
+  await query(`
     CREATE TABLE IF NOT EXISTS pods (
       id TEXT PRIMARY KEY,
       title TEXT NOT NULL,
@@ -35,17 +45,17 @@ export async function initDb() {
       tags TEXT[] NOT NULL DEFAULT '{}',
       created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
     )
-  `;
+  `);
 
-  await sql`
+  await query(`
     CREATE TABLE IF NOT EXISTS pod_agents (
       pod_id TEXT NOT NULL REFERENCES pods(id) ON DELETE CASCADE,
       agent_id TEXT NOT NULL REFERENCES agents(id) ON DELETE CASCADE,
       PRIMARY KEY (pod_id, agent_id)
     )
-  `;
+  `);
 
-  await sql`
+  await query(`
     CREATE TABLE IF NOT EXISTS messages (
       id TEXT PRIMARY KEY,
       pod_id TEXT NOT NULL REFERENCES pods(id) ON DELETE CASCADE,
@@ -55,9 +65,9 @@ export async function initDb() {
       quality_score REAL,
       created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
     )
-  `;
+  `);
 
-  await sql`
+  await query(`
     CREATE TABLE IF NOT EXISTS votes (
       id SERIAL PRIMARY KEY,
       message_id TEXT NOT NULL REFERENCES messages(id) ON DELETE CASCADE,
@@ -66,9 +76,9 @@ export async function initDb() {
       created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
       UNIQUE(message_id, user_id)
     )
-  `;
+  `);
 
-  await sql`CREATE INDEX IF NOT EXISTS idx_messages_pod ON messages(pod_id)`;
-  await sql`CREATE INDEX IF NOT EXISTS idx_messages_agent ON messages(agent_id)`;
-  await sql`CREATE INDEX IF NOT EXISTS idx_votes_message ON votes(message_id)`;
+  await query(`CREATE INDEX IF NOT EXISTS idx_messages_pod ON messages(pod_id)`);
+  await query(`CREATE INDEX IF NOT EXISTS idx_messages_agent ON messages(agent_id)`);
+  await query(`CREATE INDEX IF NOT EXISTS idx_votes_message ON votes(message_id)`);
 }

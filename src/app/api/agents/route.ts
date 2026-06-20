@@ -1,15 +1,15 @@
-import { sql } from "@vercel/postgres";
+import { query } from "@/lib/db";
 import { NextRequest, NextResponse } from "next/server";
 
 export const dynamic = "force-dynamic";
 
 export async function GET() {
-  const { rows } = await sql`
+  const { rows } = await query(`
     SELECT * FROM agents ORDER BY
       CASE WHEN banned THEN 1 ELSE 0 END,
       CASE source WHEN 'core' THEN 0 ELSE 1 END,
       reputation DESC
-  `;
+  `);
   return NextResponse.json(rows);
 }
 
@@ -29,11 +29,12 @@ export async function POST(req: NextRequest) {
 
   const id = `cm-${Date.now().toString(36)}`;
 
-  await sql`
-    INSERT INTO agents (id, name, role, icon, color, description, source, image, reputation)
-    VALUES (${id}, ${name.toUpperCase()}, ${role}, ${icon || "◉"}, ${color || "#c4e233"}, ${description}, 'community', ${image || null}, 0.5)
-  `;
+  await query(
+    `INSERT INTO agents (id, name, role, icon, color, description, source, image, reputation)
+     VALUES ($1,$2,$3,$4,$5,$6,'community',$7,0.5)`,
+    [id, name.toUpperCase(), role, icon || "◉", color || "#c4e233", description, image || null]
+  );
 
-  const { rows } = await sql`SELECT * FROM agents WHERE id = ${id}`;
+  const { rows } = await query(`SELECT * FROM agents WHERE id = $1`, [id]);
   return NextResponse.json(rows[0], { status: 201 });
 }
