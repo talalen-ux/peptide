@@ -177,17 +177,17 @@ export function Flask3D() {
   );
 
   return (
-    <group ref={groupRef} position={[0, -0.3, 0]}>
+    <group ref={groupRef} position={[2.2, -0.5, -1]} scale={0.75}>
       {/* Glass shell */}
       <mesh geometry={glassGeo}>
         <meshPhysicalMaterial
           color="#d4e8c0"
           transparent
-          opacity={0.08}
+          opacity={0.06}
           roughness={0.02}
           metalness={0.05}
           side={THREE.DoubleSide}
-          envMapIntensity={0.4}
+          envMapIntensity={0.3}
         />
       </mesh>
 

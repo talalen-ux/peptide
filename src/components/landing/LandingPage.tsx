@@ -162,7 +162,7 @@ export default function LandingPage() {
 
       {/* Mobile: animated SVG flask background instead of WebGL */}
       {!showScene && (
-        <div className="fixed inset-0 -z-10 flex items-center justify-center">
+        <div className="fixed inset-0 -z-10 flex items-center justify-end pr-4">
           <div
             className="absolute inset-0"
             style={{
@@ -175,7 +175,7 @@ export default function LandingPage() {
             viewBox="0 0 64 88"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
-            className="w-48 h-64 opacity-20"
+            className="w-40 h-56 opacity-15"
             style={{ filter: "drop-shadow(0 0 40px rgba(196,226,51,0.15))" }}
           >
             <rect x="20" y="2" width="24" height="4" rx="2" fill="#c4e233" opacity="0.7" />
@@ -231,12 +231,12 @@ export default function LandingPage() {
 
       <main className="landing-text">
         {/* Chapter 0 — Hero */}
-        <Chapter id="ch0" className="flex-col gap-3 sm:gap-4 px-6">
-          <div className="relative z-10 flex flex-col items-center text-center">
-            <h1 className="font-display text-[clamp(3rem,12vw,7rem)] text-[var(--text-strong)] leading-none tracking-tight">
+        <Chapter id="ch0" className="flex-col gap-3 sm:gap-4 px-6 sm:px-12 lg:px-20">
+          <div className="relative z-10 flex flex-col items-start text-left max-w-3xl">
+            <h1 className="font-display text-[clamp(3rem,10vw,6.5rem)] text-[var(--text-strong)] leading-[0.95] tracking-tight">
               bionet<span className="text-[var(--accent)]">.</span>
             </h1>
-            <p className="font-mono text-[11px] sm:text-[12px] text-[var(--text-muted)] tracking-[0.2em] uppercase mt-3">
+            <p className="font-mono text-[11px] sm:text-[12px] text-[var(--text-secondary)] tracking-[0.2em] uppercase mt-4">
               Tokenized Scientific Intelligence
             </p>
           </div>
@@ -251,8 +251,8 @@ export default function LandingPage() {
         </Chapter>
 
         {/* Chapter 1 — Vision */}
-        <Chapter id="ch1" className="flex-col gap-6 sm:gap-8 px-6">
-          <div className="relative z-10 max-w-2xl text-center">
+        <Chapter id="ch1" className="flex-col gap-6 sm:gap-8 px-6 sm:px-12 lg:px-20 !items-start">
+          <div className="relative z-10 max-w-xl text-left">
             <RevealText trigger="#ch1" solid>
               Scientific intelligence becomes economically composable
             </RevealText>
@@ -268,11 +268,11 @@ export default function LandingPage() {
         </Chapter>
 
         {/* Chapter 2 — How it works */}
-        <Chapter id="ch2" className="flex-col gap-8 sm:gap-10 px-6">
-          <div className="relative z-10 max-w-2xl text-center">
+        <Chapter id="ch2" className="flex-col gap-8 sm:gap-10 px-6 sm:px-12 lg:px-20 !items-start">
+          <div className="relative z-10 max-w-xl text-left">
             <RevealText trigger="#ch2" solid>Coordinate. Fund. Discover.</RevealText>
             <FadeIn trigger="#ch2" delay={0.2} className="mt-8">
-              <div className="flex gap-8 sm:gap-16 font-mono text-center justify-center">
+              <div className="flex gap-8 sm:gap-12 font-mono">
                 {[
                   { value: "Curate", desc: "Surface the best research", color: "var(--accent)" },
                   { value: "Fund", desc: "Back scientific directions", color: "#a78bfa" },
@@ -282,7 +282,7 @@ export default function LandingPage() {
                     <p className="text-[16px] sm:text-[18px] font-semibold mb-1" style={{ color: item.color }}>
                       {item.value}
                     </p>
-                    <p className="text-[9px] sm:text-[10px] text-[var(--text-secondary)] tracking-wider max-w-[100px]">
+                    <p className="text-[9px] sm:text-[10px] text-[var(--text-secondary)] tracking-wider max-w-[120px]">
                       {item.desc}
                     </p>
                   </div>
@@ -290,7 +290,7 @@ export default function LandingPage() {
               </div>
             </FadeIn>
             <FadeIn trigger="#ch2" delay={0.4} className="mt-6">
-              <div className="flex flex-wrap justify-center gap-2 font-mono text-[9px] sm:text-[10px] text-[var(--text-secondary)]">
+              <div className="flex flex-wrap gap-2 font-mono text-[9px] sm:text-[10px] text-[var(--text-secondary)]">
                 {["longevity", "peptide research", "synthetic biology", "genomics", "computational chemistry", "therapeutics"].map((d) => (
                   <span key={d} className="border border-[var(--border)] rounded-full px-2 sm:px-2.5 py-1">{d}</span>
                 ))}
@@ -300,10 +300,10 @@ export default function LandingPage() {
         </Chapter>
 
         {/* Chapter 3 — CTA */}
-        <Chapter id="ch3" className="flex-col gap-5 sm:gap-6 px-6">
-          <div className="relative z-10 text-center">
+        <Chapter id="ch3" className="flex-col gap-5 sm:gap-6 px-6 sm:px-12 lg:px-20 !items-start">
+          <div className="relative z-10 text-left max-w-xl">
             <FadeIn trigger="#ch3">
-              <p className="font-display text-[clamp(1.3rem,3.5vw,2.5rem)] text-[var(--text-strong)] text-center leading-[1.2]">
+              <p className="font-display text-[clamp(1.3rem,3.5vw,2.5rem)] text-[var(--text-strong)] leading-[1.2]">
                 Tokenized scientific intelligence.
               </p>
             </FadeIn>
@@ -316,7 +316,7 @@ export default function LandingPage() {
               </Link>
             </FadeIn>
             <FadeIn trigger="#ch3" delay={0.3} className="mt-8">
-              <div className="flex items-center gap-3 sm:gap-6 flex-wrap justify-center font-mono text-[9px] sm:text-[10px] text-[var(--text-muted)]">
+              <div className="flex items-center gap-3 sm:gap-6 flex-wrap font-mono text-[9px] sm:text-[10px] text-[var(--text-muted)]">
                 <span><span className="text-[var(--text-secondary)]">{activeAgents.length}</span> agents</span>
                 <span className="text-[var(--border-hover)]">·</span>
                 <span><span className="text-[var(--text-secondary)]">{pods.length}</span> pods</span>
