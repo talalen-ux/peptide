@@ -229,19 +229,16 @@ export default function LandingPage() {
         </div>
       )}
 
-      <main>
+      <main className="landing-text">
         {/* Chapter 0 — Hero */}
         <Chapter id="ch0" className="flex-col gap-3 sm:gap-4 px-6">
-          {/* Text backdrop for readability */}
           <div className="relative z-10 flex flex-col items-center text-center">
-            <div className="px-6 py-8 sm:py-10 rounded-lg" style={{ background: "rgba(6,10,12,0.6)", backdropFilter: "blur(12px)", WebkitBackdropFilter: "blur(12px)" }}>
-              <h1 className="font-display text-[clamp(3rem,12vw,7rem)] text-[var(--text-strong)] leading-none tracking-tight">
-                bionet<span className="text-[var(--accent)]">.</span>
-              </h1>
-              <p className="font-mono text-[11px] sm:text-[12px] text-[var(--text-muted)] tracking-[0.2em] uppercase mt-3">
-                Tokenized Scientific Intelligence
-              </p>
-            </div>
+            <h1 className="font-display text-[clamp(3rem,12vw,7rem)] text-[var(--text-strong)] leading-none tracking-tight">
+              bionet<span className="text-[var(--accent)]">.</span>
+            </h1>
+            <p className="font-mono text-[11px] sm:text-[12px] text-[var(--text-muted)] tracking-[0.2em] uppercase mt-3">
+              Tokenized Scientific Intelligence
+            </p>
           </div>
           <div className="absolute bottom-10 sm:bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2">
             <span className="font-mono text-[10px] text-[var(--text-muted)] tracking-wider animate-pulse">
@@ -255,7 +252,7 @@ export default function LandingPage() {
 
         {/* Chapter 1 — Vision */}
         <Chapter id="ch1" className="flex-col gap-6 sm:gap-8 px-6">
-          <div className="relative z-10 max-w-2xl text-center px-4 py-8 sm:py-10 rounded-lg mx-4" style={{ background: "rgba(6,10,12,0.55)", backdropFilter: "blur(8px)", WebkitBackdropFilter: "blur(8px)" }}>
+          <div className="relative z-10 max-w-2xl text-center">
             <RevealText trigger="#ch1" solid>
               Scientific intelligence becomes economically composable
             </RevealText>
@@ -272,7 +269,7 @@ export default function LandingPage() {
 
         {/* Chapter 2 — How it works */}
         <Chapter id="ch2" className="flex-col gap-8 sm:gap-10 px-6">
-          <div className="relative z-10 max-w-2xl text-center px-4 py-8 sm:py-10 rounded-lg mx-4" style={{ background: "rgba(6,10,12,0.55)", backdropFilter: "blur(8px)", WebkitBackdropFilter: "blur(8px)" }}>
+          <div className="relative z-10 max-w-2xl text-center">
             <RevealText trigger="#ch2" solid>Coordinate. Fund. Discover.</RevealText>
             <FadeIn trigger="#ch2" delay={0.2} className="mt-8">
               <div className="flex gap-8 sm:gap-16 font-mono text-center justify-center">
@@ -304,7 +301,7 @@ export default function LandingPage() {
 
         {/* Chapter 3 — CTA */}
         <Chapter id="ch3" className="flex-col gap-5 sm:gap-6 px-6">
-          <div className="relative z-10 text-center px-6 py-8 sm:py-10 rounded-lg" style={{ background: "rgba(6,10,12,0.55)", backdropFilter: "blur(8px)", WebkitBackdropFilter: "blur(8px)" }}>
+          <div className="relative z-10 text-center">
             <FadeIn trigger="#ch3">
               <p className="font-display text-[clamp(1.3rem,3.5vw,2.5rem)] text-[var(--text-strong)] text-center leading-[1.2]">
                 Tokenized scientific intelligence.
