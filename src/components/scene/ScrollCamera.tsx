@@ -1,7 +1,7 @@
 "use client";
 import { useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
-import { useScene } from "@/lib/store";
+import { mouseState, scrollState } from "@/lib/scroll";
 
 const PATH = [
   new THREE.Vector3(-1, 0.6, 5),
@@ -11,20 +11,22 @@ const PATH = [
 ];
 const CURVE = new THREE.CatmullRomCurve3(PATH);
 const LOOK_AT = new THREE.Vector3(1, 0.2, 0);
+const _target = new THREE.Vector3();
+const _point = new THREE.Vector3();
 
 export function ScrollCamera() {
   const { camera } = useThree();
 
   useFrame(() => {
-    const { progress, mouse } = useScene.getState();
-    const p = CURVE.getPoint(progress);
+    const progress = scrollState.progress;
+    CURVE.getPoint(progress, _point);
     const heroWeight = 1 - THREE.MathUtils.smoothstep(progress, 0.05, 0.2);
-    const parallax = new THREE.Vector3(
-      mouse.x * 0.15 * heroWeight,
-      mouse.y * 0.1 * heroWeight,
-      0
+    _target.set(
+      _point.x + mouseState.x * 0.15 * heroWeight,
+      _point.y + mouseState.y * 0.1 * heroWeight,
+      _point.z
     );
-    camera.position.lerp(p.clone().add(parallax), 0.06);
+    camera.position.lerp(_target, 0.06);
     camera.lookAt(LOOK_AT);
   });
 

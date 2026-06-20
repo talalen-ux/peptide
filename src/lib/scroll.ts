@@ -2,44 +2,59 @@
 import Lenis from "lenis";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useScene } from "./store";
 
 gsap.registerPlugin(ScrollTrigger);
+
+export const scrollState = { progress: 0, chapter: 0 };
+export const mouseState = { x: 0, y: 0 };
+
+const mouseTarget = { x: 0, y: 0 };
+
+function onPointerMove(e: PointerEvent) {
+  mouseTarget.x = (e.clientX / window.innerWidth) * 2 - 1;
+  mouseTarget.y = -((e.clientY / window.innerHeight) * 2 - 1);
+}
+
+function lerpMouse() {
+  mouseState.x += (mouseTarget.x - mouseState.x) * 0.06;
+  mouseState.y += (mouseTarget.y - mouseState.y) * 0.06;
+}
 
 export function initScroll() {
   const lenis = new Lenis({ lerp: 0.1, smoothWheel: true });
   lenis.on("scroll", ScrollTrigger.update);
-  gsap.ticker.add((t) => lenis.raf(t * 1000));
+
+  const rafTick = (t: number) => lenis.raf(t * 1000);
+  gsap.ticker.add(rafTick);
   gsap.ticker.lagSmoothing(0);
 
-  ScrollTrigger.create({
+  const scrollTrigger = ScrollTrigger.create({
     start: 0,
     end: "max",
     onUpdate: (self) => {
-      const p = self.progress;
-      const chapter = p < 0.25 ? 0 : p < 0.5 ? 1 : p < 0.75 ? 2 : 3;
-      useScene.setState({ progress: p, chapter });
+      scrollState.progress = self.progress;
+      scrollState.chapter = self.progress < 0.25 ? 0 : self.progress < 0.5 ? 1 : self.progress < 0.75 ? 2 : 3;
     },
   });
 
-  const target = { x: 0, y: 0 };
-  window.addEventListener("pointermove", (e) => {
-    target.x = (e.clientX / window.innerWidth) * 2 - 1;
-    target.y = -((e.clientY / window.innerHeight) * 2 - 1);
-    useScene.setState({ mouseRaw: { ...target } });
-  });
-  gsap.ticker.add(() => {
-    const s = useScene.getState();
-    const nx = s.mouse.x + (target.x - s.mouse.x) * 0.06;
-    const ny = s.mouse.y + (target.y - s.mouse.y) * 0.06;
-    useScene.setState({ mouse: { x: nx, y: ny } });
-  });
+  window.addEventListener("pointermove", onPointerMove);
+  gsap.ticker.add(lerpMouse);
 
   const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
-  useScene.setState({ reducedMotion: mq.matches });
-  mq.addEventListener("change", (e) =>
-    useScene.setState({ reducedMotion: e.matches })
-  );
+  const onMqChange = (e: MediaQueryListEvent) => {
+    (window as unknown as Record<string, boolean>).__reducedMotion = e.matches;
+  };
+  (window as unknown as Record<string, boolean>).__reducedMotion = mq.matches;
+  mq.addEventListener("change", onMqChange);
 
-  return lenis;
+  return {
+    destroy() {
+      lenis.destroy();
+      gsap.ticker.remove(rafTick);
+      gsap.ticker.remove(lerpMouse);
+      window.removeEventListener("pointermove", onPointerMove);
+      mq.removeEventListener("change", onMqChange);
+      scrollTrigger.kill();
+    },
+  };
 }

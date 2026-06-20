@@ -3,27 +3,26 @@ import { useRef, useMemo } from "react";
 import { useFrame } from "@react-three/fiber";
 import { Points, PointMaterial } from "@react-three/drei";
 import * as THREE from "three";
-import { useScene } from "@/lib/store";
+import { scrollState } from "@/lib/scroll";
 
 export function FloatingParticles() {
   const ref = useRef<THREE.Points>(null!);
 
   const positions = useMemo(() => {
-    const arr = new Float32Array(1200 * 3);
-    for (let i = 0; i < 1200; i++) {
-      arr[i * 3] = (Math.random() - 0.5) * 20;
-      arr[i * 3 + 1] = (Math.random() - 0.5) * 20;
-      arr[i * 3 + 2] = (Math.random() - 0.5) * 20;
+    const arr = new Float32Array(400 * 3);
+    for (let i = 0; i < 400; i++) {
+      arr[i * 3] = (Math.random() - 0.5) * 12;
+      arr[i * 3 + 1] = (Math.random() - 0.5) * 12;
+      arr[i * 3 + 2] = (Math.random() - 0.5) * 12;
     }
     return arr;
   }, []);
 
   useFrame(() => {
-    const { progress } = useScene.getState();
     ref.current.rotation.y += 0.0002;
-    ref.current.rotation.x = progress * 0.1;
+    ref.current.rotation.x = scrollState.progress * 0.1;
     (ref.current.material as THREE.PointsMaterial).opacity =
-      0.3 + THREE.MathUtils.smoothstep(progress, 0.3, 0.7) * 0.5;
+      0.3 + THREE.MathUtils.smoothstep(scrollState.progress, 0.3, 0.7) * 0.5;
   });
 
   return (
