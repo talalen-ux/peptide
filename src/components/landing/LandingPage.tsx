@@ -160,9 +160,9 @@ export default function LandingPage() {
         </div>
       )}
 
-      {/* Mobile: static gradient background instead of WebGL */}
+      {/* Mobile: animated SVG flask background instead of WebGL */}
       {!showScene && (
-        <div className="fixed inset-0 -z-10">
+        <div className="fixed inset-0 -z-10 flex items-center justify-center">
           <div
             className="absolute inset-0"
             style={{
@@ -170,6 +170,62 @@ export default function LandingPage() {
                 "radial-gradient(ellipse 60% 40% at 50% 40%, rgba(196,226,51,0.06) 0%, transparent 70%)",
             }}
           />
+          {/* CSS-animated SVG flask for mobile */}
+          <svg
+            viewBox="0 0 64 88"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            className="w-48 h-64 opacity-20"
+            style={{ filter: "drop-shadow(0 0 40px rgba(196,226,51,0.15))" }}
+          >
+            <rect x="20" y="2" width="24" height="4" rx="2" fill="#c4e233" opacity="0.7" />
+            <path
+              d="M24 6 L24 28 L6 66 Q6 76 16 76 L48 76 Q58 76 58 66 L40 28 L40 6"
+              stroke="#c4e233"
+              strokeWidth="1.5"
+              strokeLinejoin="round"
+              fill="#c4e233"
+              fillOpacity="0.03"
+            />
+            <path
+              d="M10 52 Q20 46 32 52 Q44 58 54 52 L58 66 Q58 76 48 76 L16 76 Q6 76 6 66 Z"
+              fill="#c4e233"
+              fillOpacity="0.25"
+            >
+              <animate attributeName="d" dur="3s" repeatCount="indefinite" values="
+                M10 52 Q20 46 32 52 Q44 58 54 52 L58 66 Q58 76 48 76 L16 76 Q6 76 6 66 Z;
+                M10 52 Q22 58 32 52 Q42 46 54 52 L58 66 Q58 76 48 76 L16 76 Q6 76 6 66 Z;
+                M10 52 Q20 46 32 52 Q44 58 54 52 L58 66 Q58 76 48 76 L16 76 Q6 76 6 66 Z
+              " />
+            </path>
+            <path
+              d="M10 56 Q22 50 32 56 Q42 62 54 56 L58 66 Q58 76 48 76 L16 76 Q6 76 6 66 Z"
+              fill="#c4e233"
+              fillOpacity="0.5"
+            >
+              <animate attributeName="d" dur="3s" repeatCount="indefinite" values="
+                M10 56 Q22 50 32 56 Q42 62 54 56 L58 66 Q58 76 48 76 L16 76 Q6 76 6 66 Z;
+                M10 56 Q20 62 32 56 Q44 50 54 56 L58 66 Q58 76 48 76 L16 76 Q6 76 6 66 Z;
+                M10 56 Q22 50 32 56 Q42 62 54 56 L58 66 Q58 76 48 76 L16 76 Q6 76 6 66 Z
+              " />
+            </path>
+            <path d="M8 64 L56 64 Q58 76 48 76 L16 76 Q6 76 8 64 Z" fill="#c4e233" fillOpacity="0.7" />
+            <circle cx="22" cy="68" r="2.5" fill="#060a0c" fillOpacity="0.3">
+              <animate attributeName="cy" dur="2.8s" repeatCount="indefinite" values="68;42;68" />
+              <animate attributeName="opacity" dur="2.8s" repeatCount="indefinite" values="0.3;0.5;0.3" />
+              <animate attributeName="r" dur="2.8s" repeatCount="indefinite" values="2.5;1;2.5" />
+            </circle>
+            <circle cx="36" cy="70" r="1.8" fill="#060a0c" fillOpacity="0.25">
+              <animate attributeName="cy" dur="3.5s" repeatCount="indefinite" values="70;46;70" begin="0.8s" />
+              <animate attributeName="opacity" dur="3.5s" repeatCount="indefinite" values="0.25;0.4;0.25" begin="0.8s" />
+              <animate attributeName="r" dur="3.5s" repeatCount="indefinite" values="1.8;0.8;1.8" begin="0.8s" />
+            </circle>
+            <circle cx="28" cy="72" r="1.5" fill="#060a0c" fillOpacity="0.2">
+              <animate attributeName="cy" dur="4s" repeatCount="indefinite" values="72;48;72" begin="1.5s" />
+              <animate attributeName="opacity" dur="4s" repeatCount="indefinite" values="0.2;0.35;0.2" begin="1.5s" />
+              <animate attributeName="r" dur="4s" repeatCount="indefinite" values="1.5;0.6;1.5" begin="1.5s" />
+            </circle>
+          </svg>
         </div>
       )}
 
