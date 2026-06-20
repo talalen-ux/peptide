@@ -44,8 +44,12 @@ html.lenis, html.lenis body { height: auto; }
 
 .landing-text h1,
 .landing-text h2,
-.landing-text p {
-  text-shadow: 0 2px 20px rgba(6, 10, 12, 0.9), 0 0 40px rgba(6, 10, 12, 0.7);
+.landing-text p,
+.landing-text span {
+  text-shadow:
+    0 1px 8px rgba(6, 10, 12, 1),
+    0 2px 24px rgba(6, 10, 12, 1),
+    0 0 60px rgba(6, 10, 12, 0.8);
 }
 .landing-text .stroke-text {
   text-shadow: none;

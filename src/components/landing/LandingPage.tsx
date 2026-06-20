@@ -257,7 +257,7 @@ export default function LandingPage() {
               Scientific intelligence becomes economically composable
             </RevealText>
             <FadeIn trigger="#ch1" delay={0.2} className="mt-6">
-              <p className="text-[13px] sm:text-[15px] text-[var(--text-secondary)] leading-[1.75]">
+              <p className="text-[13px] sm:text-[15px] text-[var(--text)] leading-[1.75]">
                 Global participation, transparent funding, open coordination,
                 and liquid exposure to scientific innovation — across longevity,
                 peptide research, synthetic biology, genomics, computational
@@ -282,7 +282,7 @@ export default function LandingPage() {
                     <p className="text-[16px] sm:text-[18px] font-semibold mb-1" style={{ color: item.color }}>
                       {item.value}
                     </p>
-                    <p className="text-[9px] sm:text-[10px] text-[var(--text-muted)] tracking-wider max-w-[100px]">
+                    <p className="text-[9px] sm:text-[10px] text-[var(--text-secondary)] tracking-wider max-w-[100px]">
                       {item.desc}
                     </p>
                   </div>
@@ -290,7 +290,7 @@ export default function LandingPage() {
               </div>
             </FadeIn>
             <FadeIn trigger="#ch2" delay={0.4} className="mt-6">
-              <div className="flex flex-wrap justify-center gap-2 font-mono text-[9px] sm:text-[10px] text-[var(--text-muted)]">
+              <div className="flex flex-wrap justify-center gap-2 font-mono text-[9px] sm:text-[10px] text-[var(--text-secondary)]">
                 {["longevity", "peptide research", "synthetic biology", "genomics", "computational chemistry", "therapeutics"].map((d) => (
                   <span key={d} className="border border-[var(--border)] rounded-full px-2 sm:px-2.5 py-1">{d}</span>
                 ))}

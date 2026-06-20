@@ -19,14 +19,14 @@ export function Scene() {
     >
       <Suspense fallback={null}>
         <Environment preset="night" />
-        <ambientLight intensity={0.15} />
+        <ambientLight intensity={0.1} />
         <pointLight
           position={[0, -0.2, 0]}
-          intensity={2}
+          intensity={0.8}
           color="#c4e233"
-          distance={4}
+          distance={3}
         />
-        <pointLight position={[3, 2, 2]} intensity={0.5} color="#ffffff" />
+        <pointLight position={[3, 2, 2]} intensity={0.3} color="#ffffff" />
         <ScrollCamera />
         <Flask3D />
         <FloatingParticles />

@@ -137,13 +137,13 @@ export function Flask3D() {
     if (liquidMatRef.current) {
       liquidMatRef.current.emissiveIntensity = THREE.MathUtils.damp(
         liquidMatRef.current.emissiveIntensity,
-        0.4 + highlight * 0.8,
+        0.2 + highlight * 0.3,
         3,
         delta
       );
       liquidMatRef.current.opacity = THREE.MathUtils.damp(
         liquidMatRef.current.opacity,
-        0.7 + highlight * 0.2,
+        0.45 + highlight * 0.15,
         3,
         delta
       );
@@ -151,7 +151,7 @@ export function Flask3D() {
     if (glowLightRef.current) {
       glowLightRef.current.intensity = THREE.MathUtils.damp(
         glowLightRef.current.intensity,
-        1.5 + highlight * 3,
+        0.8 + highlight * 1.2,
         3,
         delta
       );
@@ -159,7 +159,7 @@ export function Flask3D() {
     if (glowRingRef.current) {
       glowRingRef.current.scale.setScalar(1 + highlight * 0.15);
       (glowRingRef.current.material as THREE.MeshBasicMaterial).opacity =
-        0.03 + highlight * 0.06;
+        0.015 + highlight * 0.03;
     }
   });
 

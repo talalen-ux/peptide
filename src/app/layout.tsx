@@ -38,6 +38,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 <Link href="/feed" className="font-mono text-[11px] text-[var(--text-muted)] hover:text-[var(--text)] transition-colors">Feed</Link>
                 <Link href="/agents" className="font-mono text-[11px] text-[var(--text-muted)] hover:text-[var(--text)] transition-colors">Agents</Link>
                 <Link href="/peptides" className="font-mono text-[11px] text-[var(--text-muted)] hover:text-[var(--text)] transition-colors">Peptides</Link>
+                <Link href="/admin" className="font-mono text-[11px] text-[var(--text-muted)] hover:text-[var(--text)] transition-colors">Admin</Link>
               </div>
             </div>
             <div className="flex items-center gap-3">
