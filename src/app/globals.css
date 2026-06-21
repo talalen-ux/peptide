@@ -26,78 +26,65 @@
 body { background: var(--bg); color: var(--text); }
 ::selection { background: rgba(196, 226, 51, 0.12); color: #fff; }
 
-/* Lenis smooth scroll */
-html.lenis, html.lenis body { height: auto; }
-.lenis.lenis-smooth { scroll-behavior: auto !important; }
-.lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
-.lenis.lenis-stopped { overflow: hidden; }
-
-/* Stroke text for scroll reveals */
-.stroke-text {
-  color: transparent;
-  -webkit-text-stroke: 1.5px rgba(228, 236, 240, 0.7);
-  font-feature-settings: "ss01";
-}
-@media (max-width: 640px) {
-  .stroke-text { -webkit-text-stroke-width: 0.8px; }
-}
-
-.landing-text h1,
-.landing-text h2,
-.landing-text p,
-.landing-text span {
-  text-shadow:
-    0 1px 8px rgba(6, 10, 12, 1),
-    0 2px 24px rgba(6, 10, 12, 1),
-    0 0 60px rgba(6, 10, 12, 0.8);
-}
-.landing-text .stroke-text {
-  text-shadow: none;
-}
-
 @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
 .blink { animation: blink 1s step-end infinite; }
 
-/* Flask animations */
-@keyframes slosh {
-  0%, 100% { d: path("M10 52 Q20 46 32 52 Q44 58 54 52 L58 66 Q58 76 48 76 L16 76 Q6 76 6 66 Z"); }
-  50% { d: path("M10 52 Q22 58 32 52 Q42 46 54 52 L58 66 Q58 76 48 76 L16 76 Q6 76 6 66 Z"); }
+/* Flask CSS animations */
+@keyframes flask-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+.flask-float { animation: flask-float 6s ease-in-out infinite; }
+
+.liquid-back {
+  animation: 3s ease-in-out infinite alternate;
+  animation-name: slosh-back;
+}
+.liquid-front {
+  animation: 3s ease-in-out infinite alternate-reverse;
+  animation-name: slosh-front;
+}
+@keyframes slosh-back {
+  0% { d: path("M10 52 Q20 46 32 52 Q44 58 54 52 L58 66 Q58 76 48 76 L16 76 Q6 76 6 66 Z"); }
+  100% { d: path("M10 52 Q22 58 32 52 Q42 46 54 52 L58 66 Q58 76 48 76 L16 76 Q6 76 6 66 Z"); }
 }
 @keyframes slosh-front {
-  0%, 100% { d: path("M10 56 Q22 50 32 56 Q42 62 54 56 L58 66 Q58 76 48 76 L16 76 Q6 76 6 66 Z"); }
-  50% { d: path("M10 56 Q20 62 32 56 Q44 50 54 56 L58 66 Q58 76 48 76 L16 76 Q6 76 6 66 Z"); }
+  0% { d: path("M10 56 Q22 50 32 56 Q42 62 54 56 L58 66 Q58 76 48 76 L16 76 Q6 76 6 66 Z"); }
+  100% { d: path("M10 56 Q20 62 32 56 Q44 50 54 56 L58 66 Q58 76 48 76 L16 76 Q6 76 6 66 Z"); }
 }
-@keyframes bubble-rise {
-  0% { transform: translateY(0) scale(1); opacity: 0.7; }
-  50% { opacity: 0.9; }
-  100% { transform: translateY(-28px) scale(0.5); opacity: 0; }
+
+@keyframes bubble-up-1 {
+  0% { transform: translateY(0); opacity: 0.25; }
+  80% { opacity: 0.4; }
+  100% { transform: translateY(-24px) scale(0.5); opacity: 0; }
 }
-@keyframes bubble-rise-slow {
-  0% { transform: translateY(0) scale(1); opacity: 0.5; }
-  60% { opacity: 0.7; }
-  100% { transform: translateY(-22px) scale(0.4); opacity: 0; }
+@keyframes bubble-up-2 {
+  0% { transform: translateY(0); opacity: 0.2; }
+  70% { opacity: 0.35; }
+  100% { transform: translateY(-20px) scale(0.4); opacity: 0; }
 }
-@keyframes flask-glow {
-  0%, 100% { filter: drop-shadow(0 0 15px rgba(196,226,51,0.15)); }
-  50% { filter: drop-shadow(0 0 30px rgba(196,226,51,0.25)); }
+@keyframes bubble-up-3 {
+  0% { transform: translateY(0); opacity: 0.15; }
+  60% { opacity: 0.3; }
+  100% { transform: translateY(-22px) scale(0.3); opacity: 0; }
 }
-@keyframes float-particle {
-  0%, 100% { transform: translateY(0) translateX(0); opacity: 0.3; }
-  25% { transform: translateY(-8px) translateX(4px); opacity: 0.5; }
-  50% { transform: translateY(-4px) translateX(-3px); opacity: 0.3; }
-  75% { transform: translateY(-12px) translateX(2px); opacity: 0.6; }
+.bubble-1 { animation: bubble-up-1 3s ease-in infinite; }
+.bubble-2 { animation: bubble-up-2 4s ease-in infinite 1s; }
+.bubble-3 { animation: bubble-up-3 3.5s ease-in infinite 2s; }
+
+/* Scroll-triggered section fade */
+.fade-section {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fade-in 0.6s ease-out forwards;
+  animation-timeline: view();
+  animation-range: entry 0% entry 30%;
 }
-@keyframes orbit {
-  0% { transform: rotate(0deg) translateX(120px) rotate(0deg); }
-  100% { transform: rotate(360deg) translateX(120px) rotate(-360deg); }
+@keyframes fade-in {
+  to { opacity: 1; transform: translateY(0); }
 }
-@keyframes orbit-reverse {
-  0% { transform: rotate(0deg) translateX(100px) rotate(0deg); }
-  100% { transform: rotate(-360deg) translateX(100px) rotate(360deg); }
-}
-@keyframes fade-in-up {
-  0% { opacity: 0; transform: translateY(20px); }
-  100% { opacity: 1; transform: translateY(0); }
+@supports not (animation-timeline: view()) {
+  .fade-section { opacity: 1; transform: none; }
 }
 
 .card {
