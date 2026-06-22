@@ -26,6 +26,22 @@
 body { background: var(--bg); color: var(--text); }
 ::selection { background: rgba(196, 226, 51, 0.12); color: #fff; }
 
+/* Lenis smooth scroll */
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+.lenis.lenis-stopped { overflow: hidden; }
+
+/* Stroke text for scroll reveals */
+.stroke-text {
+  color: transparent;
+  -webkit-text-stroke: 1.5px rgba(228, 236, 240, 0.7);
+  font-feature-settings: "ss01";
+}
+@media (max-width: 640px) {
+  .stroke-text { -webkit-text-stroke-width: 0.8px; }
+}
+
 @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
 .blink { animation: blink 1s step-end infinite; }
 
@@ -114,7 +130,7 @@ body { background: var(--bg); color: var(--text); }
   font-size: 11px;
   flex-wrap: wrap;
 }
-.stat-bar .stat-value { color: var(--text-strong); font-weight: 500; font-family: var(--font-young-serif); }
+.stat-bar .stat-value { color: var(--text-strong); font-weight: 500; }
 .stat-bar .stat-label { color: var(--text-muted); margin-left: 4px; }
 
 .row {
