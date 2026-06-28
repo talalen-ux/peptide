@@ -179,7 +179,7 @@ export default function LandingPage() {
             Scientific intelligence becomes economically composable
           </RevealText>
           <FadeIn trigger="#ch1" delay={0.2} className="max-w-xl text-center">
-            <p className="text-[15px] text-[var(--text-secondary)] leading-[1.75] bg-[rgba(6,10,12,0.6)] backdrop-blur-md px-5 py-4 rounded-lg inline-block">
+            <p className="font-mono text-[12px] text-[var(--text-secondary)] leading-[1.75] bg-[rgba(6,10,12,0.6)] backdrop-blur-md px-5 py-4 rounded-lg inline-block">
               Global participation, transparent funding, open coordination,
               and liquid exposure to scientific innovation — across longevity,
               peptide research, synthetic biology, genomics, computational
